@@ -1,0 +1,22 @@
+.Main_se1_box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+    img{
+        padding: 8px;
+        width: 22px;
+        height: 22px;
+        background-color: #5092CF;
+        border-radius: 50%;
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+        margin-bottom: 3px;
+    }
+    p{
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+        font-size: 0.9em;
+        font-weight: bold;
+        color: #5092CF;
+    }
+}

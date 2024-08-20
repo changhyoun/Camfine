@@ -1,0 +1,84 @@
+
+
+#DetailFooter{
+    width: 100%;
+    height: 70px !important;
+    border-top: 1px solid #5092CF;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .DetailFooter_inner{
+        width: 90%;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        .back{
+            width: 35px;
+            height: 35px;
+            border: 2px solid #5092CF;
+            border-radius: 30px;
+            color: #5092CF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: none;
+            box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+            span{
+                font-size: 1.2em;
+            }
+        }
+        .reser{
+            width: 70%;
+            background-color: #5092CF;
+            color: #f5f5f5;
+            height: 40px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            outline: none;
+            border: 0;
+            box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+            a{
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #f5f5f5;
+                img{
+                    width: 24px;
+                }
+            }
+            & > span{
+                font-size: 1.2em;
+                font-family: 'BinggraeSamanco';
+            }
+        }
+        .love{
+            width: 35px;
+            height: 35px;
+            border: 2px solid #5092CF;
+            border-radius: 30px;
+            color: #5092CF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: none;
+            box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+            span{
+                font-size: 1.2em;
+            }
+        }
+      
+    }
+}
+
+    
+    

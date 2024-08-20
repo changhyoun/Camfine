@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+@font-face {
+  font-family: 'BinggraeSamanco';
+  src: url(../public/BinggraeSamanco.ttf) format('opentype');
+}
+@font-face {
+  font-family: 'BinggraeSamanco-bold';
+  src: url(../public/BinggraeSamanco-Bold.ttf) format('opentype');
+}
+@font-face {
+  font-family: 'BinggraeMelona';
+  src: url(../public/BinggraeMelona.ttf)  format('opentype');
+}
+@font-face {
+  font-family: 'BinggraeMelona-Bold';
+  src: url(../public/BinggraeMelona-Bold.ttf) format('opentype');
+}
+@font-face {
+  font-family: 'BinggraeII';
+  src: url(../public/BinggraeII.ttf) format('opentype');
+}
+@font-face {
+  font-family: 'BinggraeII-bold';
+  src: url(../public/BinggraeII-Bold.ttf) format('opentype');
+}
+@font-face {
+  font-family: 'Binggrae';
+  src: url(../public/Binggrae.ttf) format('opentype');
+}
+@font-face {
+  font-family: 'Binggra-bold';
+  src: url(../public/Binggrae-Bold.ttf) format('opentype');
+}
+@font-face {
+  font-family: 'BinggraeTaom-bold';
+  src: url(../public/BinggraeTaom-Bold.ttf) format('opentype');
+
+}
+
+@import 'swiper/swiper-bundle.min.css';
+
+
+.App{
+  font-family: "Noto Sans KR", sans-serif;
+  width: 393px; height: 852px;
+  border-radius: 50px;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  overflow: hidden;
+  scroll-behavior: smooth;
+  transition: all 0.3s ease;
+  box-shadow: 2px 2px 2px rgb(0, 0,0, 0.25);
+  border: 1px solid #5092CF;
+  box-sizing: border-box;
+  }
+
+  @media only screen and (max-width: 768px) {
+
+    .App{
+      /* border: none; */
+      border-radius: 0px;
+    }
+
+  }

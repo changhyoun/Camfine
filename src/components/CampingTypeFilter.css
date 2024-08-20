@@ -1,0 +1,104 @@
+ /* 숙소 유형 필터  */
+ .Camping_type{
+    position: absolute;
+    bottom: -350px;
+    left: 0;
+    width: 100%;
+    height: 350px;
+    background-color: white;
+    border-radius: 0 0 15px 15px;
+    z-index: 100;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+    border: 1px solid #5092CF;
+    opacity: 0;
+    transition: 0.3s ease-in-out;
+    display: none;
+    position: fixed;
+    &.show {
+        display: block;
+        opacity: 1;
+        bottom: 0;
+    }
+    .Camping_type_warp{
+        width: 100%;
+        height: calc(100% - 8%);
+        & > div:nth-of-type(1) {
+            width: 100%;
+            height: 12%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #5092CF;
+            font-family: 'Binggra-bold';
+            font-size: 1em;
+        }
+        & > div:nth-of-type(2) {
+            width: 100%;
+            height: 65%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            ul{
+                display: flex;
+                flex-wrap: wrap;
+                width: 90%;
+                height: 90%;
+    
+                align-items: center;
+                justify-content: space-between;
+                
+                li{
+                    width: 47%;
+                    height: 25%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border:1px solid #b4b4b4 ;
+                    color:#b4b4b4 ;
+                    font-size: 0.85em;
+                    border-radius: 5px;
+                    &.active {
+                        border: none;
+                        background-color: #5092CF;
+                        color: #f5f5f5;
+                    }
+                }
+            }
+        }
+
+        & > div:nth-of-type(3){
+            width: 100%;
+            height: 20%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            button{
+                width: 60%;
+                height: 80%;
+                background: #5092CF;
+                border: none;
+                color: #f5f5f5;
+                border-radius: 10px;
+                font-family: "Noto Sans KR", sans-serif;
+                font-weight: bold;
+                font-size: 1em;
+                
+            }
+        }
+    }
+    .close{
+        width: 100%;
+        height: 8%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        cursor: pointer;
+        border: none;
+        & > span{
+            color: #a1a1a1;
+            font-size: 2.5em;
+        }
+    }
+}
