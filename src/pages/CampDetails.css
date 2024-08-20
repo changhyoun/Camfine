@@ -69,13 +69,13 @@
                 justify-content: center;
                 position: relative;
                 right: 0;
-                &.scrolled {
-                    background-color: #ff0000; /* 예시: 배경색을 빨간색으로 변경 */
+                /* &.scrolled {
+                    background-color: #ff0000;
                     position: absolute;
                     top: 5px;
                     z-index: 100;
-                    /* 추가적인 스타일 */
-                }
+                    
+                } */
             }
 
             .SearchList_main_img {

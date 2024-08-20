@@ -308,6 +308,7 @@ const CampDetails = () => {
                     <h2>{camp.facltNm}</h2>
                     <p>{camp.addr1}</p>
                     <p>{camp.intro}</p>
+                    
                 </div>
             </div>
            
@@ -347,6 +348,7 @@ const CampDetails = () => {
                                     </span>
                                 </button>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
