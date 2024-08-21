@@ -51,34 +51,25 @@
                 width: 100%;
                 display: flex;
                 justify-content: right;
-            }
-            .share-button {
-                background-color: rgba(0, 0, 0, 0.6);
-                color: white;
-                border: none;
-                background-color: #5092CF;
-                border-radius: 5px;
-                width: 35px;
-                height: 35px;
-                border-radius: 50%;
-                cursor: pointer;
-                margin-top: 10px;
-                text-align: right;
+                height: 40px;
+                border: 2px solid #5192CF;
+                border-radius: 7px;
                 display: flex;
                 align-items: center;
+                cursor: pointer;
                 justify-content: center;
-                position: relative;
-                right: 0;
-                /* &.scrolled {
-                    background-color: #ff0000;
-                    position: absolute;
-                    top: 5px;
-                    z-index: 100;
-                    
-                } */
+                box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15);
+                color: #5092CF;
+                font-family: 'BinggraeMelona';
+                font-size: 0.8em;
+                transition: all 0.3s ease;
+                span{
+                    margin-right: 3%;
+                }
             }
+           
 
-            .SearchList_main_img {
+            .CampDetails_main_img {
                 height: 200px;
                 width: 100%;
                 position: relative;
@@ -262,6 +253,277 @@
                         }
                     }
                 }
+            }
+            /* 탭 */
+            .tabs{
+                width: 100%;
+                height:230px;
+                background:white;
+                border: 2px solid #5092CF;
+                overflow:hidden;
+                border-radius:15px;
+                box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+                margin: 20px 0;
+                .tab-header {
+                    height:54px;
+                    display:flex;
+                    align-items:center;
+                    & > div {
+                        width:calc(100% / 2);
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        flex-direction: column;
+                        text-align:center;
+                        color:#888;
+                        font-weight:600;
+                        cursor:pointer;
+                        font-size:14px;
+                        text-transform:uppercase;
+                        outline:none;
+                        position: relative;
+                        &:nth-of-type(1)::before  {
+                            content: "";
+                            top: 50%;
+                            transform: translateY(-50%);
+                            width: 2px;
+                            height: 50%;
+                            position: absolute;
+                            right: 0;
+                            background-color: #5092CF;
+                        }
+                        &.active {
+                            color:#5092CF;
+                            
+                        }
+                    }
+                  }
+                  .tab-indicator {
+                    position:relative;
+                    width:calc(100% / 2);
+                    height:3px;
+                    background:#5092CF;
+                    left:0px;
+                    border-radius:5px;
+                    transition:all 500ms ease-in-out;
+                  }
+                  .tab-body {
+                    position:relative;
+                    height:calc(100% - 60px);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    #expla{
+                        h3{
+                            color: #5092CF;
+                            font-family: 'BinggraeMelona';
+                            font-size: 1em;
+                            margin-bottom: 3%;
+                        }
+                        p{
+                            font-family: 'BinggraeMelona';
+                            padding-right: 2%;
+                        }
+                    }
+                    & > div {
+                        position:absolute;
+                        top:-200%;
+                        opacity:0;
+                        transform:scale(0.9);
+                        transition:opacity 500ms ease-in-out 0ms,
+                        transform 500ms ease-in-out 0ms;
+                          &.active {
+                            top:0px;
+                            opacity:1;
+                            transform:scale(1);
+                            display: flex;
+                            width: 90%;
+                            justify-content: space-evenly;
+                            height: calc(100% - 5px);
+                          }
+                          &:nth-of-type(1).active {
+                            align-items: center;
+                            display: flex;
+                            padding-top: 2%;
+                          }
+                          &:nth-of-type(2).active {
+                            height: 90%;
+                            display: flex;
+                            flex-direction: column;
+                            overflow-y: auto;
+                            overflow-x: hidden;
+                            margin-top: 3%;
+                            &::-webkit-scrollbar {
+                                background-color: #fff;
+                                box-shadow: inset 2px 2px 2px #00000040;
+                                width: 5px;
+                            }
+                        
+                            &::-webkit-scrollbar-thumb {
+                                background: #5092CF;
+                                border-radius: 20px;
+                                height: 30%;
+                            }
+                          }
+                          .icon_warp{
+                            height: 90%;
+                            width: 10%;
+                            color: #f5f5f5;
+                            background-color: #5092CF;
+                            border-radius: 80px;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: space-evenly;
+                            svg{
+                                width: 100%;
+                                height: 16px;
+                                text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+                                padding: 40% 0;
+                            }
+                          }
+                          .info_warp{
+                            width: 70%;
+                            height: 90%;
+                            justify-content: space-between;
+                            display: flex;
+                            flex-direction: column;
+                            h4{
+                                font-family: 'Binggrae';
+                                color: #5092CF;
+                                text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+                            }
+                            p{
+                                font-family: 'BinggraeMelona';
+                                color: #333;
+                            }
+                            
+                            div > span{
+                                background-color: #5092CF;
+                                color: #f5f5f5;
+                                padding: 2.5% 5%;
+                                border-radius: 15px;
+                                box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+                                font-size: 1em;
+                                margin-right: 3%;
+                                font-family: 'BinggraeSamanco';
+                            }
+                            & > *{
+                                width: 100%;
+                                height: 30%;
+                                display: flex;
+                                align-items: center;
+                                overflow-y: auto;
+                                overflow-x: hidden;
+                                flex-wrap: wrap;
+                                row-gap: 5px;
+                                column-gap: 10px;
+                                &::-webkit-scrollbar {
+                                    background-color: #fff;
+                                    box-shadow: inset 2px 2px 2px #00000040;
+                                    width: 5px;
+                                }
+                            
+                                &::-webkit-scrollbar-thumb {
+                                    background: #5092CF;
+                                    border-radius: 20px;
+                                    height: 30%;
+                                }
+                            }
+                          }
+                          
+                      }
+                  }
+            }
+
+            .CampDetails_main_facilities{
+                width: 100%;
+                height: 250px;
+                display: block;
+                position: relative;
+                background-color: #f5f5f5;
+                margin: 20px 0;
+                border: 1px solid #EBEBEB;
+                border-radius: 15px;
+                & > div:nth-of-type(1){
+                    width: 100%;
+                    height: 40px;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    border-radius: 15px 15px 0 0;
+                    background: linear-gradient(135deg, #5092CF, #7BA4CA);
+                    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+                    z-index: 1;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    .inner{
+                        width: 80%;
+                        height: 100%;
+                        padding-top: 3%;
+                        font-family: 'Binggrae';
+                        color: #f5f5f5;
+                    }
+                }
+                & > div:nth-of-type(2){
+                    width: 100%;
+                    height: 220px;
+                    z-index: 5;
+                    margin-top: 30px;
+                    border-radius: 15px ;
+                    background-color: white;
+                    z-index: 15;
+                    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    position: relative;
+                    .inner{
+                        width: 90%;
+                        height: 90%;
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 2%;
+                        align-items: center;
+                        text-align: center;
+                        margin: 0 auto;
+                        .facility{
+                            display: flex;
+                            flex-direction: column;
+                            width: 23%;
+                            height: 32%;
+
+                            align-items: center;
+                            justify-content: space-between;
+                            color: #5092CF;
+                            .icon_box{
+                                width: 44px;
+                                height: 44px;
+                                background-color: white;
+                                border-radius: 15px;
+                                box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                border: 1px solid #c2c2c2;
+                                svg{
+                                    width: 55%;
+                                    height: 55%;
+                                    color: #5092CF;
+                                }
+                            }
+                          
+
+                            p{
+                              font-size: 0.8em;
+                            }
+                            
+                        }
+                    }
+                }
+                
             }
         }
     }

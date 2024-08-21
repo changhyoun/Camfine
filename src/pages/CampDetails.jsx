@@ -5,6 +5,8 @@ import axios from 'axios';
 import { weather_1, weather_2, weather_3, weather_4, weather_5, weather_6, weather_7, weather_not, facebookLogo, xLogo, kakaoLogo } from '../components/Images'; 
 import './CampDetails.css';
 import DetailFooter from '../components/DetailFooter';
+import { faMagnifyingGlassLocation,faCampground,faUpRightAndDownLeftFromCenter,faBolt, faWifi, faFire, faShower, faGamepad, faBasketballBall, faDumbbell } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const defaultImageUrl = 'https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 const errorImageUrl = 'https://images.unsplash.com/photo-1652077859695-de2851a95620?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
@@ -25,6 +27,19 @@ const CampDetails = () => {
     const [dayOfWeek, setDayOfWeek] = useState('');
     const [isActive, setIsActive] = useState(false); 
     const [isSharePopupOpen, setIsSharePopupOpen] = useState(false); 
+    const [activeTab, setActiveTab] = useState(0); // 활성화된 탭 인덱스를 관리합니다.
+    const tabCount = 2; // 탭의 총 개수
+
+    const handleTabClick = (index) => {
+        setActiveTab(index);
+    };
+
+    useEffect(() => {
+        const tabIndicator = document.querySelector('.tab-indicator');
+        if (tabIndicator) {
+            tabIndicator.style.left = `calc(calc(100% / ${tabCount}) * ${activeTab})`;
+        }
+    }, [activeTab]);
 
     const toggleActiveState = () => {
         setIsActive(!isActive);
@@ -39,7 +54,6 @@ const CampDetails = () => {
         const shareButtonBox = document.querySelector('.share-button_box');
         const shareButton = document.querySelector('.share-button');
 
-        // 스크롤 이벤트 리스너
         const handleScroll = () => {
             if (campDetailsMain && shareButtonBox && shareButton) {
                 const scrollPosition = campDetailsMain.scrollTop;
@@ -53,12 +67,10 @@ const CampDetails = () => {
             }
         };
 
-        // 스크롤 이벤트 리스너 추가
         if (campDetailsMain) {
             campDetailsMain.addEventListener('scroll', handleScroll);
         }
 
-        // 컴포넌트 언마운트 시 이벤트 리스너 제거
         return () => {
             if (campDetailsMain) {
                 campDetailsMain.removeEventListener('scroll', handleScroll);
@@ -245,20 +257,41 @@ const CampDetails = () => {
     const temperatureStyle = temperature === "정보가\n없어요 😅" ? { fontSize: '0.9rem', whiteSpace: 'pre-wrap',textAlign: 'center' } : {}; 
     const humidityStyle = humidity === "" ? { display: 'none' } : {}; 
 
+
+    const renderFacilityIcon = (facility) => {
+        switch(facility.trim()) {
+            case '전기':
+                return <FontAwesomeIcon icon={faBolt} />;
+            case '무선인터넷':
+                return <FontAwesomeIcon icon={faWifi} />;
+            case '장작판매':
+                return <FontAwesomeIcon icon={faFire} />;
+            case '온수':
+                return <FontAwesomeIcon icon={faShower} />;
+            case '트렘폴린':
+                return <FontAwesomeIcon icon={faGamepad} />;
+            case '놀이터':
+                return <FontAwesomeIcon icon={faBasketballBall} />;
+            case '운동시설':
+                return <FontAwesomeIcon icon={faDumbbell} />;
+            default:
+                return null; // 아이콘이 없는 경우 null 반환
+        }
+    };
+
     return (
         <div id='CampDetails'>
             <Header />
             <div className={`CampDetails_main ${isSharePopupOpen ? 'popup_on' : ''}`}>
                 <div className="SearchList_main_warp">
-                    <div className="share-button_box">
-                        <button className="share-button" onClick={toggleSharePopup}>
-                            <span className="material-symbols-rounded">
-                                share
-                            </span>
-                        </button>
+                    <div className="share-button_box"  onClick={toggleSharePopup}>
+                        <span className="material-symbols-rounded">
+                            share
+                        </span>
+                        이 캠핑장을 지인들에게 공유해보세요!
                     </div>
                     
-                    <div className={`SearchList_main_img ${!hasImage ? 'no-image' : ''}`}>
+                    <div className={`CampDetails_main_img ${!hasImage ? 'no-image' : ''}`}>
                         {!hasImage && <p>임시 이미지입니다.</p>}
                         <img src={imageUrl} alt={camp.facltNm} />
                     </div>
@@ -305,10 +338,72 @@ const CampDetails = () => {
                             </div>
                         </div>                            
                     </div>
-                    <h2>{camp.facltNm}</h2>
-                    <p>{camp.addr1}</p>
-                    <p>{camp.intro}</p>
-                    
+                    <div className="tabs">
+                        <div className="tab-header">
+                            <div 
+                                className={activeTab === 0 ? 'active' : ''} 
+                                onClick={() => handleTabClick(0)}
+                            >
+                               <span className="material-symbols-rounded">
+                                    info
+                                </span>
+                                기본 정보
+                            </div>
+                            <div 
+                                className={activeTab === 1 ? 'active' : ''} // 여기에 'active' 클래스가 추가됨
+                                onClick={() => handleTabClick(1)}
+                            >
+                                <span className="material-symbols-rounded">
+                                    tooltip
+                                </span>
+                                간단 설명
+                            </div>
+                        </div>
+                        <div className="tab-indicator"></div>
+                        <div className="tab-body">
+                            <div className={activeTab === 0 ? 'active' : ''}>
+                                    <div className="icon_warp">
+                                            <FontAwesomeIcon icon={faCampground} />
+                                            <FontAwesomeIcon icon={faMagnifyingGlassLocation} />
+                                            <FontAwesomeIcon icon={faCampground} />                              
+                                    </div>
+                                    <div className="info_warp">
+                                        <h4>{camp.facltNm}</h4>
+                                        <p>{camp.addr1}</p>
+                                        <div>
+                                            {camp.posblFcltyCl ? camp.posblFcltyCl.split(',').map((facility, index) => (
+                                                <span key={index}>{facility.trim()}</span>
+                                            )) : <span>정보가 없어요 🧐</span>}
+                                        </div>
+                                    </div>
+                            </div>
+                            <div className={activeTab === 1 ? 'active' : ''} id='expla' >
+                                <h3>읽어보시면 더욱 좋을거예요 !</h3>
+                                <p>{camp.featureNm}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="CampDetails_main_facilities">
+                        <div className="CampDetails_main_facilities_top">
+                            <div className="inner">
+                                시설 / 환경
+                            </div>
+                        </div>
+                        <div className="CampDetails_main_facilities_bottom">
+                            <div className="inner">
+                                {camp.sbrsCl ? camp.sbrsCl.split(',').map((facility, index) => (
+                                    <div key={index} className="facility">
+                                        <div className="icon_box">
+                                            {renderFacilityIcon(facility)} {/* 아이콘 렌더링 */}
+                                        </div>
+                                        
+                                        <p>{facility.trim()}</p> {/* 텍스트 렌더링 */}
+                                    </div>
+                                )) : <p>정보가 없어요 🧐</p>}
+                            </div>
+                        </div>
+                    </div>
+                
                 </div>
             </div>
            
