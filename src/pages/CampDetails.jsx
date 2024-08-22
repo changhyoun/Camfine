@@ -2,15 +2,15 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import axios from 'axios';
-import { weather_1, weather_2, weather_3, weather_4, weather_5, weather_6, weather_7, weather_not, facebookLogo, xLogo, kakaoLogo, logoWhite,location_icon,CampDetails_main_pet_pass_lt,CampDetails_main_pet_pass_rt,CampDetails_main_pet_not_lt,CampDetails_main_pet_not_rt, SearchList_main_statistics_lt_back } from '../components/Images'; 
+import { weather_1, weather_2, weather_3, weather_4, weather_5, weather_6, weather_7, weather_not, facebookLogo, xLogo, kakaoLogo, logoWhite,location_icon,CampDetails_main_pet_pass_lt,CampDetails_main_pet_pass_rt,CampDetails_main_pet_not_lt,CampDetails_main_pet_not_rt, SearchList_main_statistics_lt_back,CampDetails_main_share } from '../components/Images'; 
 import './CampDetails.css';
 import DetailFooter from '../components/DetailFooter';
-import { faMagnifyingGlassLocation,faCampground,faUpRightAndDownLeftFromCenter,faBolt, faWifi, faFire, faShower, faGamepad, faBasketballBall, faDumbbell,faWater,faPersonWalking,faStreetView,faStore } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlassLocation,faCampground,faUpRightAndDownLeftFromCenter,faBolt, faWifi, faFire, faShower, faGamepad, faBasketballBall, faDumbbell,faWater,faPersonWalking,faStreetView,faStore,faShareFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import { Navigation } from 'swiper/modules';
-import KakaoMap from '../components/KakaoMap'; // KakaoMap 컴포넌트 불러오기
+import KakaoMap from '../components/KakaoMap';
 
 const defaultImageUrl = 'https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 const errorImageUrl = 'https://images.unsplash.com/photo-1652077859695-de2851a95620?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
@@ -33,6 +33,10 @@ const CampDetails = () => {
     const [isActive, setIsActive] = useState(false); 
     const [isSharePopupOpen, setIsSharePopupOpen] = useState(false); 
     const swiperRef = useRef(null);
+
+    const mapX = camp?.mapX;
+    const mapY = camp?.mapY;
+
 
     
     const handleSlideClick = (event) => {
@@ -322,12 +326,6 @@ const CampDetails = () => {
             <Header logo={logoWhite} />
             <div className={`CampDetails_main ${isSharePopupOpen ? 'popup_on' : ''}`}>
                 <div className="CampDetails_main_warp">
-                    {/* <div className="share-button_box"  onClick={toggleSharePopup}>
-                        <span className="material-symbols-rounded">
-                            share
-                        </span>
-                        이 캠핑장을 지인들에게 공유해보세요!
-                    </div> */}
                     <div className="CampDetails_main_img_box">
                         <div className={`CampDetails_main_img ${!hasImage ? 'no-image' : ''}`}>
                             {!hasImage && <p>임시 이미지입니다.</p>}
@@ -478,9 +476,16 @@ const CampDetails = () => {
                                 )}
                             </div>
                         </div>
-                        <KakaoMap address={camp.addr1} />
+                        {mapX && mapY && (
+                            <KakaoMap mapX={mapX} mapY={mapY} />
+                        )}
+                        <div className="CampDetails_main_shareCall" onClick={toggleSharePopup}>
+                                <p>캠핑장을 공유해보세요 !</p>
+                                <FontAwesomeIcon icon={faShareFromSquare} />
+                                <img src={CampDetails_main_share} alt="CampDetails_main_share" />     
+                        </div>
                     </div>
-                    
+                  
                     
                 
                 </div>

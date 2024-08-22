@@ -103,6 +103,16 @@ export {CampDetails_main_pet_pass_lt}
 import CampDetails_main_pet_pass_rt from "../assets/CampDetails_main_pet_pass_rt.png"
 export {CampDetails_main_pet_pass_rt}
 
+// 상세페이지 지도
+import CampDetails_main_map_coordinate from "../assets/CampDetails_main_map_coordinate.png"
+export {CampDetails_main_map_coordinate}
+
+// 상세페이지 공유 남자
+import CampDetails_main_share from "../assets/CampDetails_main_share.png"
+export {CampDetails_main_share}
+
+
+
 
 
 

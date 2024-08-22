@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Header.css';
 import { logoBlue } from './Images';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase';
 import { onAuthStateChanged, signOut, deleteUser } from 'firebase/auth';
 import { doc, getDoc, deleteDoc } from 'firebase/firestore';
@@ -10,6 +10,11 @@ function Header({ logo }) {
     const [nickname, setNickname] = useState('');
     const [menuVisible, setMenuVisible] = useState(false);
     const menuRef = useRef(null);
+    const navigate = useNavigate();
+
+    const handleLogoClick = () => {
+        navigate('/'); // /Main 경로로 이동
+      };
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -76,8 +81,6 @@ function Header({ logo }) {
     useEffect(() => {
         const handleBeforeUnload = (event) => {
             if (auth.currentUser) {
-                // navigator.sendBeacon은 비동기 작업을 보장하지 않지만,
-                // 페이지를 닫는 동안 요청을 보낼 수 있는 가장 좋은 방법입니다.
                 navigator.sendBeacon('/logout', JSON.stringify({ uid: auth.currentUser.uid }));
                 signOut(auth).catch((error) => console.error('로그아웃 오류:', error.message));
             }
@@ -93,7 +96,7 @@ function Header({ logo }) {
     return (
         <div id="Header">
             <div className="Header_inner">
-                <img src={logo || logoBlue} alt="logo" />
+                <img src={logo || logoBlue} alt="logo" onClick={handleLogoClick} />
                 {nickname ? (
                     <div className="user-menu" ref={menuRef}>
                         <div className='user-menu-main' onClick={() => setMenuVisible(!menuVisible)}>

@@ -15,6 +15,7 @@
         justify-content: space-between;
         img{
             height: 100%;
+            cursor: pointer;
         }
         a{
             font-family: 'BinggraeMelona';
