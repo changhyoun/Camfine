@@ -89,6 +89,24 @@ export {xLogo}
 import facebookLogo from "../assets/facebookLogo.png"
 export {facebookLogo}
 
+// 상세 페이지 위치 아이콘
+import location_icon from "../assets/location_icon.png"
+export {location_icon}
+
+// 상세 페이지 애견관련 이미지
+import CampDetails_main_pet_not_lt from "../assets/CampDetails_main_pet_not_lt.png"
+export {CampDetails_main_pet_not_lt}
+import CampDetails_main_pet_not_rt from "../assets/CampDetails_main_pet_not_rt.png"
+export {CampDetails_main_pet_not_rt}
+import CampDetails_main_pet_pass_lt from "../assets/CampDetails_main_pet_pass_lt.png"
+export {CampDetails_main_pet_pass_lt}
+import CampDetails_main_pet_pass_rt from "../assets/CampDetails_main_pet_pass_rt.png"
+export {CampDetails_main_pet_pass_rt}
+
+
+
+
+
 
 
 

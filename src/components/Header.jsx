@@ -3,10 +3,10 @@ import './Header.css';
 import { logoBlue } from './Images';
 import { Link } from 'react-router-dom';
 import { auth, db } from '../firebase';
-import { onAuthStateChanged, signOut, deleteUser } from 'firebase/auth'; // deleteUser 추가
-import { doc, getDoc, deleteDoc } from 'firebase/firestore'; // deleteDoc 추가
+import { onAuthStateChanged, signOut, deleteUser } from 'firebase/auth';
+import { doc, getDoc, deleteDoc } from 'firebase/firestore';
 
-function Header() {
+function Header({ logo }) {
     const [nickname, setNickname] = useState('');
     const [menuVisible, setMenuVisible] = useState(false);
     const menuRef = useRef(null);
@@ -93,7 +93,7 @@ function Header() {
     return (
         <div id="Header">
             <div className="Header_inner">
-                <img src={logoBlue} alt="logoBlue" />
+                <img src={logo || logoBlue} alt="logo" />
                 {nickname ? (
                     <div className="user-menu" ref={menuRef}>
                         <div className='user-menu-main' onClick={() => setMenuVisible(!menuVisible)}>

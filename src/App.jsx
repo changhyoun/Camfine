@@ -17,7 +17,6 @@ function App() {
     if (window.Kakao && !window.Kakao.isInitialized()) {
         window.Kakao.init(process.env.REACT_APP_KAKAO_API_KEY);
     }
-
     return (
         <Router>
             <div className="App">
