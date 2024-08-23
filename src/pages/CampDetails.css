@@ -203,6 +203,7 @@
                                 span{
                                     color: #777;
                                     font-size: 1.3em;
+                                    cursor: pointer;
 
                                 }
                             }
@@ -426,6 +427,30 @@
                     margin: 20px 0;
                     border: 1px solid #EBEBEB;
                     border-radius: 15px;
+                    transition: all 0.3s ease;
+                    transform-origin: top top;
+                        &.active{
+                            height: 60px;
+                        }
+                        &.active div:nth-of-type(1){
+                            border-radius: 30px;
+                            & > span{
+                                top: 50%;
+                                transform: translateY(-50%);
+                            }
+                        }
+                        &.active div:nth-of-type(1) .inner p{
+                            padding: 3% 31.5%;
+                            top: 50%;
+                            transform: translateY(-50%);
+                        }
+                        &.active div:nth-of-type(2){
+                            height: 0px;
+                            
+                        }
+
+            
+
 
                     & > div:nth-of-type(1){
                         width: 100%;
@@ -439,6 +464,15 @@
                         display: flex;
                         align-items: center;
                         justify-content: center;
+                        transition: all 0.3s ease;
+                        & > span{
+                            position: absolute;
+                            right: 6%;
+                            top: 12%;
+                            color: white;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                        }
                         .inner{
                             width: 80%;
                             height: 100%;
@@ -456,8 +490,10 @@
                                 font-weight: bold;
                                 font-size: 0.75em;
                                 position: absolute;
-                                right: 0;
+                                right: 6%;
                                 top: 18%;
+                                transition: all 0.3s ease;
+                                cursor: pointer;
 
                             }
                         }
@@ -477,6 +513,7 @@
                         position: relative;
                         overflow-x: auto;
                         overflow-y: hidden;
+                        transition: all 0.3s ease;
 
                         & > img{
                             position: absolute;
@@ -537,12 +574,13 @@
                                     display: flex;
                                     align-items: center;
                                     justify-content: center;
-                                    border: 1px solid #c2c2c2;
+                                    border: 1.5px solid #c2c2c2;
                                     z-index: 10;
                                     svg{
                                         width: 55%;
                                         height: 55%;
                                         color: #5092CF;
+                                        filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.25));
                                     }
                                 }
                                 p{
@@ -568,6 +606,69 @@
                     height: 200px;
                     border-radius: 15px;
                     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+                }
+                .CampDetails_main_near{
+                    width: 100%;
+                    height: 210px;
+                    display: flex;
+                    align-items: center;
+                    border: 1px solid red;
+                    flex-direction: column;
+                    & > div:nth-of-type(1){
+                        height: 40px;
+                        width: 100%;
+                        border-radius: 30px;
+                        background-color: #5092CF;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: white;
+                        font-size: 0.9em;
+                        span{
+                            color: #D9D9D9;
+                            font-weight: 300;
+                            font-size: 0.75em;
+                        }
+                    }
+                    & > div:nth-of-type(2){
+                        height: 160px;
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        & > div{
+                            width: 100%;
+                            height: 90%;
+                            div{
+                                width: 45%;
+                                height: 100%;
+                                div:nth-of-type(1){
+                                    height: 70%;
+                                    border-radius: 15px;
+                                    overflow: hidden;
+                                    width: 100%;
+                                    img{
+                                        height: 100%;
+                                        width: 100%;
+                                        object-fit: cover;
+
+                                    }
+                                }
+                                div:nth-of-type(2){
+                                    height: 30%;
+                                    width: 100%;
+                                    p{
+                                        font-family: 'BinggraeMelona';
+                                        font-size: 0.9em;
+                                    }
+                                    span{
+                                        font-family: 'BinggraeSamanco';
+                                        font-size: 0.9em;
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
                 .CampDetails_main_shareCall{
                     width: 100%;
@@ -675,8 +776,6 @@
         & > div:nth-of-type(2){
             width: 100%;
             height: 40%;
-
-            
             border-radius: 30px;
             display: flex;
             align-items: center;
@@ -687,6 +786,7 @@
                 background: none;
                 border: 0;
                 outline: 0;
+                cursor: pointer;
                 img{
                     padding: 10%;        
                     border-radius: 50px;

@@ -14,7 +14,7 @@ import KakaoMap from '../components/KakaoMap';
 
 const defaultImageUrl = 'https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 const errorImageUrl = 'https://images.unsplash.com/photo-1652077859695-de2851a95620?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
-
+const CAMPING_API_KEY = process.env.REACT_APP_CAMPING_API_KEY;
 
 const CampDetails = () => {
     const { id } = useParams();
@@ -33,12 +33,12 @@ const CampDetails = () => {
     const [isActive, setIsActive] = useState(false); 
     const [isSharePopupOpen, setIsSharePopupOpen] = useState(false); 
     const swiperRef = useRef(null);
+    const [isActive2, setIsActive2] = useState(false); 
+    const [nearbyCamps, setNearbyCamps] = useState([]); 
 
     const mapX = camp?.mapX;
     const mapY = camp?.mapY;
 
-
-    
     const handleSlideClick = (event) => {
         const { clientX, currentTarget } = event;
         const { left, width } = currentTarget.getBoundingClientRect();
@@ -53,6 +53,10 @@ const CampDetails = () => {
 
     const toggleActiveState = () => {
         setIsActive(!isActive);
+    };
+
+    const toggleActiveState2 = () => {
+        setIsActive2(!isActive2);
     };
 
     const toggleSharePopup = () => {
@@ -253,11 +257,64 @@ const CampDetails = () => {
             };
 
             getWeatherData();
+
+            const getNearbyCamps = async () => {
+                try {
+                    const response = await axios.get('http://apis.data.go.kr/B551011/GoCamping/basedList', {
+                        params: {
+                            numOfRows: 10,
+                            pageNo: 1,
+                            MobileOS: 'ETC',
+                            MobileApp: 'AppTest',
+                            mapX: encodeURIComponent(camp.mapX),
+                            mapY: encodeURIComponent(camp.mapY),
+                            radius: 50000, // 반경 50km
+                            _type: 'json',
+                            serviceKey: encodeURIComponent(CAMPING_API_KEY),
+                        }
+                    });
+        
+                    
+                    console.log(response.data,'hi');
+        
+                    if (response.data && response.data.response && response.data.response.body && response.data.response.body.items && response.data.response.body.items.item) {
+                        const nearbyCamps = response.data.response.body.items.item;
+        
+                        const sortedCamps = nearbyCamps
+                            .map(nearCamp => ({
+                                ...nearCamp,
+                                distance: calculateDistance(camp.mapY, camp.mapX, nearCamp.mapY, nearCamp.mapX),
+                            }))
+                            .sort((a, b) => a.distance - b.distance)
+                            .slice(0, 2); // 가장 가까운 두 개 선택
+        
+                        setNearbyCamps(sortedCamps);
+                    } else {
+                        console.error('주변 캠핑장 데이터를 찾을 수 없습니다.');
+                        setNearbyCamps([]);
+                    }
+                } catch (error) {
+                    console.error('주변 캠핑장 데이터를 가져오는 중 오류가 발생했습니다.', error);
+                    setNearbyCamps([]);
+                }
+            };
+
+            getNearbyCamps();
         }
     }, [camp]);
 
-   
-    
+    const calculateDistance = (lat1, lon1, lat2, lon2) => {
+        const R = 6371; // 지구의 반지름 (단위: km)
+        const dLat = (lat2 - lat1) * (Math.PI / 180);
+        const dLon = (lon2 - lon1) * (Math.PI / 180);
+        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                  Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
+                  Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = R * c;
+        return distance; // 거리 (단위: km)
+    };
+
     if (!camp) {
         return <div>캠핑장 정보를 찾을 수 없습니다.</div>;
     }
@@ -299,8 +356,6 @@ const CampDetails = () => {
                 return null;
         }
     };
-
-    
 
     const handleCopyFacilityName = () => {
         const facilityName = camp.addr1;
@@ -427,10 +482,13 @@ const CampDetails = () => {
                           
                             
                         </div>
-                        <div className="CampDetails_main_facilities">
+                        <div
+                            className={`CampDetails_main_facilities ${isActive2 ? 'active' : ''}`}
+                        >
                             <div className="CampDetails_main_facilities_top">
+                            <span class="material-symbols-rounded" onClick={toggleActiveState2}>{isActive2 ? 'add' : 'remove'}</span>
                                 <div className="inner">
-                                    <p>시설 및 환경</p>
+                                    <p onClick={toggleActiveState2}>시설 및 환경</p>
                                 </div>
                             </div>
                             <div className="CampDetails_main_facilities_bottom" onClick={handleSlideClick}>
@@ -479,18 +537,39 @@ const CampDetails = () => {
                         {mapX && mapY && (
                             <KakaoMap mapX={mapX} mapY={mapY} />
                         )}
+                        <div className="CampDetails_main_near">
+                            <div className="CampDetails_main_near_top">
+                                주변에 있는 캠핑장 ⛺ <span>ㆍ최대 2개까지 표시됩니다.</span>
+                            </div>
+                            <div className="CampDetails_main_near_bottom">
+                                {nearbyCamps.length > 0 ? (
+                                    nearbyCamps.map((nearCamp, index) => (
+                                        <div key={index} className="CampDetails_main_near_bottom_warp">
+                                            <div className="camp_list">
+                                                <div className="camp_list_img">
+                                                    <p>{`거리: ${nearCamp.distance.toFixed(2)} km`}</p>
+                                                    <img src={nearCamp.firstImageUrl || defaultImageUrl} alt={nearCamp.facltNm} />
+                                                </div>
+                                                <div className="camp_list_info">
+                                                    <p>{nearCamp.facltNm}</p>
+                                                    <span>{nearCamp.addr1}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p>주변에 캠핑장이 없습니다.</p>
+                                )}
+                            </div>
+                        </div>
                         <div className="CampDetails_main_shareCall" onClick={toggleSharePopup}>
                                 <p>캠핑장을 공유해보세요 !</p>
                                 <FontAwesomeIcon icon={faShareFromSquare} />
                                 <img src={CampDetails_main_share} alt="CampDetails_main_share" />     
                         </div>
                     </div>
-                  
-                    
-                
                 </div>
             </div>
-           
             <DetailFooter />
             {isSharePopupOpen && (
                 <div className="share-popup popup_open">
@@ -527,7 +606,6 @@ const CampDetails = () => {
                                     </span>
                                 </button>
                             </div>
-                            
                         </div>
                     </div>
                 </div>
