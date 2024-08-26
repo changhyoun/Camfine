@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import './DetailFooter.css';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios'
-import { go_browser_icon } from './Images';
+import { go_browser_icon, CampDetails_list_plus, CampDetails_list_unplus } from './Images';
+import { addFavorite, removeFavorite, isFavorite } from '../favoriteService';
+import { auth } from '../firebase';
 
 function DetailFooter() {
     const navigate = useNavigate();
@@ -11,6 +11,7 @@ function DetailFooter() {
     const location = useLocation();
     const { campList } = location.state || { campList: [] };
     const [camp, setCamp] = useState(null);
+    const [isLiked, setIsLiked] = useState(false);
 
     const backBtn = () => {
         navigate(-1);
@@ -24,18 +25,45 @@ function DetailFooter() {
     }, [campList, id]);
 
     useEffect(() => {
-        if (camp) {
-            const getWeatherData = async () => {
-                const cityName = camp.sigunguNm;
-                const apiKey = process.env.REACT_APP_OPENWEATHERMAP_API_KEY;
-                const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(cityName)},KR&appid=${apiKey}&units=metric&lang=kr`;
-                
-                // weather data fetching logic here
-            };
+        const checkFavoriteStatus = async () => {
+            if (camp && auth.currentUser) {
+                const favoriteStatus = await isFavorite(camp.contentId);
+                console.log("Favorite status:", favoriteStatus); // 디버깅용 로그 추가
+                setIsLiked(favoriteStatus);
+            }
+        };
+        checkFavoriteStatus();
+    }, [camp, auth.currentUser]);
 
-            getWeatherData();
+    const handleLoveClick = async () => {
+        if (camp && auth.currentUser) {
+            if (isLiked) {
+                const confirmCancel = window.confirm('좋아요를 취소하시겠어요?');
+                if (confirmCancel) {
+                    try {
+                        await removeFavorite(camp.contentId);
+                        setIsLiked(false);
+                        alert('좋아요가 취소되었습니다.');
+                    } catch (error) {
+                        console.error('좋아요 취소 중 오류:', error);
+                        alert('좋아요 취소 중 오류가 발생했습니다. 다시 시도해 주세요.');
+                    }
+                }
+            } else {
+                try {
+                    await addFavorite(camp);
+                    setIsLiked(true);
+                    alert('찜한 장소에 추가되었습니다.');
+                } catch (error) {
+                    console.error('찜한 장소 추가 중 오류:', error);
+                    alert('찜한 장소 추가 중 오류가 발생했습니다. 다시 시도해 주세요.');
+                }
+            }
+        } else {
+            alert('로그인이 필요합니다.');
+            navigate('/login');
         }
-    }, [camp]);
+    };
 
     return (
         <div id="DetailFooter">
@@ -52,13 +80,17 @@ function DetailFooter() {
                         </a>
                     ) : (
                         <span className="no-resve-url">예약주소가 없네요!</span>
-                        
                     )}
                 </button>
-                <button className="love">
-                    <span className="material-symbols-rounded">
-                        favorite
-                    </span>
+                <button 
+                    className={`love ${isLiked ? 'liked' : ''}`}  // 좋아요 상태에 따라 클래스 추가
+                    onClick={handleLoveClick}
+                >
+                    {isLiked ?
+                        <img src={CampDetails_list_unplus} alt="CampDetails_list_unplus" /> :
+                         <img src={CampDetails_list_plus} alt="CampDetails_list_plus" />
+                        
+                    }
                 </button>
             </div>
         </div>

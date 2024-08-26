@@ -111,6 +111,18 @@ export {CampDetails_main_map_coordinate}
 import CampDetails_main_share from "../assets/CampDetails_main_share.png"
 export {CampDetails_main_share}
 
+// 상세페이지 좋아요 관련
+import CampDetails_list_plus from "../assets/CampDetails_list_plus.png"
+export {CampDetails_list_plus}
+import CampDetails_list_unplus from "../assets/CampDetails_list_unplus.png"
+export {CampDetails_list_unplus}
+
+
+// 찜한장소 관련
+import FavoriteList_unplus from "../assets/FavoriteList_unplus.png"
+export {FavoriteList_unplus}
+
+
 
 
 

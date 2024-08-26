@@ -7,6 +7,10 @@
         background-color: #5092CF;
         .Header_inner{
             width: 85%;
+            .user-menu.logged-in .user-menu-main{
+                border: 2px solid white;
+                color: white;
+            }
             img{
                 height: 90%;
             }

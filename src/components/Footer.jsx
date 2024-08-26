@@ -49,23 +49,12 @@ function Footer() {
                 </div>
                 
                 <div className="Footer_box">
-                    {/* 찜한 장소 클릭 시 로그인이 필요한지 확인 */}
-                    <a href="/das" onClick={(e) => handleProtectedLinkClick(e, '/das')}>
+                    <Link to={'/favoriteList'} onClick={handleProtectedLinkClick}>
                         <span className="material-symbols-rounded">
                             favorite
                         </span>
                         <h4>찜한 장소</h4>
-                    </a>
-                </div>
-                
-                <div className="Footer_box">
-                    {/* 내 정보 클릭 시 로그인이 필요한지 확인 */}
-                    <a href="/myInfo" onClick={(e) => handleProtectedLinkClick(e, '/myInfo')}>
-                        <span className="material-symbols-rounded">
-                            person
-                        </span>
-                        <h4>내 정보</h4>
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div>

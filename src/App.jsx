@@ -8,7 +8,9 @@ import SearchList from './pages/SearchList';
 import SignUp from './pages/SignUp';
 import UserList from './UserList'; 
 import Login from './pages/Login';
+import FavoriteList from './pages/FavoriteList';
 import './App.css';
+
 
 function App() {
     const [campList, setCampList] = useState([]);
@@ -29,10 +31,7 @@ function App() {
                     <Route path="/UserList" element={<UserList/>} />
                     
                     <Route path="/login" element={<Login/>} />
-                    
-                    
-
-                    
+                    <Route path="/favoriteList" element={<FavoriteList/>} />
 
                 </Routes>
             </div>

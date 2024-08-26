@@ -153,6 +153,7 @@ function SignUp() {
             setSignupSuccess(true);
         } catch (error) {
             console.error('Error creating user:', error.message);
+            alert('회원가입 중 오류가 발생했습니다. 다시 시도해주세요.');
         }
     };
 

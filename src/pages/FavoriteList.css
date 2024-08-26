@@ -1,0 +1,138 @@
+#FavoriteList{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .FavoriteList_main {
+        width: 100%;
+        height: calc(100% - 120px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        background-color: #f8f8f8;
+    }
+    .FavoriteList_main_inner {
+        width: 90%;
+        height: 100%;
+        box-sizing: border-box;
+        &::-webkit-scrollbar {
+            background-color: #fff;
+            box-shadow: inset 2px 2px 2px #00000040;
+            width: 5px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: #5092CF;
+            border-radius: 20px;
+            height: 30%;
+        }
+        ul{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            
+            
+            .favorite_campList{
+                width: 100%;
+                border: #BBB0B0;
+                margin-bottom: 20px;
+                height: 200px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 10px;
+                box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+                background-color: white;
+                &:first-child{
+                    margin-top: 20px;
+                }
+            
+                & > div{
+                    width: 90%;
+                    height: 90%;
+                    & > div:nth-of-type(1){
+                        width: 100%;
+                        height: 70%;
+                        border-radius: 10px;
+                        overflow: hidden;
+                        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+                        img{
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                        }
+                    }
+                    & > div:nth-of-type(2){
+                        width: 100%;
+                        height: 30%;
+                        display: flex;
+                        justify-content: space-between;
+                        & > div:nth-of-type(1){
+                            width: 80%;
+                            height: 100%;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: space-around;
+                            h3{
+                                font-family: 'BinggraeMelona';
+                            }
+                            p{
+                                color: #666;
+                                font-family: 'BinggraeMelona';
+                            }
+                            
+                        }
+                        & > div:nth-of-type(2){
+                            width: 15%;
+                            height: 100%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            position: relative;
+                            cursor: pointer;
+                            &:hover{
+                                &::before{
+                                    content: "좋아요 취소";
+                                    width: 100px;
+                                    top: -25px;
+                                    position: absolute;
+                                    height: 25px;
+                                    right: 0;
+                                    background-color: white;
+                                    border-radius: 30px;
+                                    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    font-family: 'BinggraeSamanco';
+                                    font-size: 1em;
+                                    transition: all 0.3s ease;
+                                }
+                            }
+                            img{
+                                border-radius: 50%;
+                                padding: 5px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                background-color:white;
+                                box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+                                width: 30px;
+                            }
+                       
+                           
+                        }
+
+                    }
+                    
+                }
+              
+            }
+        }
+    }
+    
+    
+}

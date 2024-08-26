@@ -14,7 +14,7 @@ function Header({ logo }) {
 
     const handleLogoClick = () => {
         navigate('/'); // /Main 경로로 이동
-      };
+    };
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -78,27 +78,12 @@ function Header({ logo }) {
 
     const displayNickname = nickname.length > 3 ? `${nickname.slice(0, 3)}...` : nickname;
 
-    useEffect(() => {
-        const handleBeforeUnload = (event) => {
-            if (auth.currentUser) {
-                navigator.sendBeacon('/logout', JSON.stringify({ uid: auth.currentUser.uid }));
-                signOut(auth).catch((error) => console.error('로그아웃 오류:', error.message));
-            }
-        };
-
-        window.addEventListener('beforeunload', handleBeforeUnload);
-
-        return () => {
-            window.removeEventListener('beforeunload', handleBeforeUnload);
-        };
-    }, []);
-
     return (
         <div id="Header">
             <div className="Header_inner">
                 <img src={logo || logoBlue} alt="logo" onClick={handleLogoClick} />
                 {nickname ? (
-                    <div className="user-menu" ref={menuRef}>
+                    <div className={`user-menu ${nickname ? 'logged-in' : ''}`} ref={menuRef}>
                         <div className='user-menu-main' onClick={() => setMenuVisible(!menuVisible)}>
                             {displayNickname}
                             <span className="material-symbols-rounded">
