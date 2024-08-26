@@ -242,7 +242,7 @@
                         display: flex;
                         align-items: center;
                         justify-content: center;
-
+                        cursor: pointer;
                         .near_camping-info{
                             width: 90%;
                             height: 90%;

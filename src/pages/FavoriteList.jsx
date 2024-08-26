@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { auth, db } from '../firebase';
 import { collection, query, where, getDocs, deleteDoc, doc } from 'firebase/firestore';
-import { Link } from 'react-router-dom';  // React Router의 Link 컴포넌트 사용
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { FavoriteList_unplus } from '../components/Images';
+import { FavoriteList_unplus,logoWhite } from '../components/Images';
 import './FavoriteList.css';
+
+const defaultImageUrl = 'https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 
 function FavoriteList() {
     const [favorites, setFavorites] = useState([]);
     const [loading, setLoading] = useState(true);
-    
+
     useEffect(() => {
         const fetchFavorites = async () => {
             setLoading(true);
@@ -50,7 +52,7 @@ function FavoriteList() {
 
     return (
         <div id="FavoriteList">
-            <Header/>
+            <Header logo={logoWhite}/>
             <div className="FavoriteList_main">
                 <div className="FavoriteList_main_inner">
                     {loading ? (
@@ -63,10 +65,11 @@ function FavoriteList() {
                                         <div className="favorite_campList_warp">
                                             <div className="favorite_campList_top">
                                                 <Link 
-                                                    to={`/camp/${fav.contentId}`}  // Link를 통해 상세 페이지로 이동
+                                                    to={`/camp/${fav.contentId}`}
+                                                    state={{ camp: fav, campList: favorites }}  // campList와 선택된 camp를 함께 전달
                                                 >
                                                     <img 
-                                                        src={fav.firstImageUrl || '대체 이미지 URL'}
+                                                        src={fav.firstImageUrl || defaultImageUrl}
                                                         alt={fav.name}
                                                         style={{ cursor: 'pointer' }}
                                                     />
@@ -74,8 +77,8 @@ function FavoriteList() {
                                             </div>
                                             <div className="favorite_campList_bt">
                                                 <div className="favorite_campList_bt_lt">
-                                                    <h3>{fav.name}</h3>
-                                                    <p>{fav.address}</p>    
+                                                    <h3>{fav.facltNm}</h3>
+                                                    <p>{fav.addr1}</p>    
                                                 </div>
                                                 <div className="favorite_campList_bt_rt">
                                                     <img 

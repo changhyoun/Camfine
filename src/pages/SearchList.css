@@ -67,10 +67,12 @@
                     font-weight: 600;
                     cursor: pointer;
                     overflow: hidden;
-                    transition: color 0.3s 0.1s ease-out;                
+                    transition: color 0.3s 0.1s ease-out;      
+                    justify-content: space-around;          
 
                     .swiper-vertical{
-                        width: fit-content;
+                        width: 40%;
+                        margin: 0;
                         height: 100%;
                         .swiper-wrapper{
                             width: 100%;

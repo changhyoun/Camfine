@@ -15,9 +15,6 @@ import KakaoMap from '../components/KakaoMap';
 const defaultImageUrl = 'https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 const errorImageUrl = 'https://images.unsplash.com/photo-1652077859695-de2851a95620?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 
-
-
-
 const getBackgroundImage = (weatherCode) => {
     switch (weatherCode.slice(0, 2)) { 
         case '09': 
@@ -109,40 +106,37 @@ const CampDetails = () => {
     const [isActive2, setIsActive2] = useState(false);
     const [nearbyCamps, setNearbyCamps] = useState([]);
 
-
     // 캠핑장 정보 로드
-    useEffect(() => {
-        const fetchCampDetails = async (campId) => {
-            try {
-                const response = await axios.get(`API_ENDPOINT/${campId}`, {
-                    params: {
-                        MobileOS: "ETC",
-                        MobileApp: "AppTest",
-                        serviceKey: process.env.REACT_APP_CAMPING_API_KEY,
-                        _type: "json"
-                    }
-                });
-                
-                // HTML 페이지를 반환했는지 확인
-                if (typeof response.data !== 'object') {
-                    throw new Error('API 요청이 HTML 페이지를 반환했습니다. API 엔드포인트를 확인하세요.');
+    const fetchCampDetails = async (campId) => {
+        try {
+            const response = await axios.get(`https://api-endpoint.com/${campId}`, {
+                params: {
+                    MobileOS: "ETC",
+                    MobileApp: "AppTest",
+                    serviceKey: process.env.REACT_APP_CAMPING_API_KEY,
+                    _type: "json",
+                    contentId: campId,
                 }
-        
-                if (response.data.response.body.items.item.length > 0) {
-                    setCamp(response.data.response.body.items.item[0]);
-                } else {
-                    setCamp(null);
-                }
-            } catch (error) {
-                console.error('캠핑장 데이터를 가져오는 중 오류가 발생했습니다.', error);
+            });
+
+            if (response.data && response.data.response?.body?.items?.item.length > 0) {
+                setCamp(response.data.response.body.items.item[0]);
+            } else {
                 setCamp(null);
             }
-        };
+        } catch (error) {
+            console.error('캠핑장 데이터를 가져오는 중 오류가 발생했습니다.', error);
+            setCamp(null);
+        }
+    };
 
-   
-        
-    
-        if (location.state?.campList) {
+    useEffect(() => {
+        console.log("Received camp from state:", location.state?.camp);
+        console.log("Received camp from state:", location.state?.camp);
+        console.log("Received campList from state:", location.state?.campList);
+        if (location.state?.camp) {
+            setCamp(location.state.camp);
+        } else if (location.state?.campList) {
             const foundCamp = location.state.campList.find(c => String(c.contentId) === String(id));
             if (foundCamp) {
                 setCamp(foundCamp);
@@ -154,7 +148,6 @@ const CampDetails = () => {
         }
     }, [id, location.state]);
 
-                
     useEffect(() => {
         if (CampDetails_main.current) {
             CampDetails_main.current.scrollTo(0, 0);  // 페이지 상단으로 스크롤
@@ -171,6 +164,7 @@ const CampDetails = () => {
                     const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(cityName)},KR&appid=${apiKey}&units=metric&lang=kr`;
 
                     const response = await axios.get(url);
+                    console.log("Weather data response:", response.data);
                     const weatherData = response.data.weather[0].description;
                     const temperatureData = Math.round(response.data.main.temp);
                     const humidityData = response.data.main.humidity;
@@ -198,7 +192,6 @@ const CampDetails = () => {
                 }
             }
         };
- 
 
         const fetchNearbyCamps = async () => {
             if (camp) {
@@ -244,7 +237,7 @@ const CampDetails = () => {
                 }
             }
         };
-
+        console.log("Camp location:", camp?.mapX, camp?.mapY);
         if (camp) {
             fetchWeatherData();
             fetchNearbyCamps();
@@ -284,7 +277,6 @@ const CampDetails = () => {
     
         const url = `https://map.kakao.com/?sName=${encodeURIComponent(startAddress)}&eName=${encodeURIComponent(destinationAddr)}&ex=${destinationLon}&ey=${destinationLat}&type=CAR`;
         
-        // 새 창에서 카카오맵 길찾기 열기
         window.open(url, '_blank');
     };
 

@@ -9,9 +9,14 @@ export const addFavorite = async (camp) => {
         await setDoc(favoriteRef, {
             uid: user.uid,
             contentId: camp.contentId,
-            name: camp.facltNm,
-            address: camp.addr1,
+            facltNm: camp.facltNm,
+            addr1: camp.addr1,
             firstImageUrl: camp.firstImageUrl,
+            mapX: camp.mapX, // 추가
+            mapY: camp.mapY, // 추가
+            sbrsCl: camp.sbrsCl, // 추가
+            doNm: camp.doNm, // 추가
+            sigunguNm: camp.sigunguNm, // 추가
         });
     } else {
         throw new Error('User not authenticated');
