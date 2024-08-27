@@ -121,6 +121,10 @@ export {CampDetails_list_unplus}
 // 찜한장소 관련
 import FavoriteList_unplus from "../assets/FavoriteList_unplus.png"
 export {FavoriteList_unplus}
+import FavoriteList_here_man from "../assets/FavoriteList_here_man.png"
+export {FavoriteList_here_man}
+import FavoriteList_here_bubble from "../assets/FavoriteList_here_bubble.png"
+export {FavoriteList_here_bubble}
 
 
 

@@ -56,7 +56,7 @@ function SearchList() {
                         MobileOS: 'ETC',
                         MobileApp: 'AppTest',
                         _type: 'json',
-                        numOfRows: 1000,
+                        numOfRows: 10,
                         pageNo: page
                     }
                 });

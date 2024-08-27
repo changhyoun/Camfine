@@ -721,7 +721,7 @@
                 .CampDetails_main_shareCall{
                     width: 100%;
                     height: 50px;
-                    margin-top: 20px;
+                    margin: 20px 0;
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -731,6 +731,7 @@
                     position: relative;
                     cursor: pointer;
                     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+                    
                     p{ 
                         font-weight: boi;
                         font-size: 1em;

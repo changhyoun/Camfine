@@ -1,4 +1,4 @@
-.Camping_type {
+.Around_Environment {
     bottom: 0;
     left: 0;
     width: 100%;
@@ -39,7 +39,7 @@
 
  
 
-    .Camping_type_warp {
+    .Around_Environment_warp {
         width: 100%;
         height: calc(100% - 18%);
         & > div:nth-of-type(1) {
@@ -131,7 +131,7 @@
 }
 
 @media (max-width: 768px) {
-    .Camping_type {
+    .Around_Environment {
         &.show {
             display: block;
             opacity: 1;

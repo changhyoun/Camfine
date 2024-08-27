@@ -1,12 +1,15 @@
+import React, { useEffect, useState, useRef } from 'react';
 import './List.css';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import React, { useEffect, useState, useRef } from 'react';
 import { no_list_man, no_list_caution, list_click_ic } from '../components/Images';
 import axios from 'axios';
 import Swiper from 'swiper/bundle';
 import 'swiper/css/bundle';
 import { Link, useLocation } from 'react-router-dom';
+import CampingTypeFilter from '../components/CampingTypeFilter';
+import CampingEnvironmentFilter from '../components/CampingEnvironmentFilter';
+import AroundEnvironmentFilter from '../components/AroundEnvironmentFilter';
 
 const CAMPING_API_KEY = process.env.REACT_APP_CAMPING_API_KEY;
 const defaultImageUrl = 'https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
@@ -27,7 +30,11 @@ function List({ campList, setCampList }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [noResults, setNoResults] = useState(false);
     const [showCampingType, setShowCampingType] = useState(false);
+    const [showCampingEnvironment, setShowCampingEnvironment] = useState(false);
+    const [showAroundEnvironment, setShowAroundEnvironment] = useState(false); // 주변 환경 필터 추가
     const [selectedCampingTypes, setSelectedCampingTypes] = useState([]);
+    const [selectedCampingEnvironments, setSelectedCampingEnvironments] = useState([]); 
+    const [selectedAroundEnvironments, setSelectedAroundEnvironments] = useState([]); // 주변 환경 필터 추가
     const observer = useRef();
     const location = useLocation();
     const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -63,7 +70,7 @@ function List({ campList, setCampList }) {
                     MobileOS: 'ETC',
                     MobileApp: 'AppTest',
                     _type: 'json',
-                    numOfRows: 100,
+                    numOfRows: 10,
                     pageNo: page
                 }
             });
@@ -157,7 +164,15 @@ function List({ campList, setCampList }) {
     };
 
     const handleCampingTypeClick = () => {
-        setShowCampingType(!showCampingType);
+        setShowCampingType(prevState => !prevState);
+    };
+
+    const handleCampingEnvironmentClick = () => {
+        setShowCampingEnvironment(prevState => !prevState);
+    };
+    
+    const handleAroundEnvironmentClick = () => {
+        setShowAroundEnvironment(prevState => !prevState);
     };
 
     const handleCampingTypeSelect = (type) => {
@@ -169,10 +184,45 @@ function List({ campList, setCampList }) {
         });
     };
 
+    const handleCampingEnvironmentSelect = (type) => { 
+        setSelectedCampingEnvironments(prevSelectedEnvironments => {
+            const newSelectedEnvironments = prevSelectedEnvironments.includes(type)
+                ? prevSelectedEnvironments.filter(t => t !== type)
+                : [...prevSelectedEnvironments, type];
+            return newSelectedEnvironments;
+        });
+    };
+
+    const handleAroundEnvironmentSelect = (type) => { 
+        setSelectedAroundEnvironments(prevSelectedAroundEnvironments => {
+            const newSelectedAroundEnvironments = prevSelectedAroundEnvironments.includes(type)
+                ? prevSelectedAroundEnvironments.filter(t => t !== type)
+                : [...prevSelectedAroundEnvironments, type];
+            return newSelectedAroundEnvironments;
+        });
+    };
+
     const handleCampingTypeConfirm = () => {
         setShowCampingType(false);
+        applyFilters();
+    };
+
+    const handleCampingEnvironmentConfirm = () => { 
+        setShowCampingEnvironment(false);
+        applyFilters();
+    };
+
+    const handleAroundEnvironmentConfirm = () => {
+        setShowAroundEnvironment(false);
+        applyFilters();
+    };
+
+    const applyFilters = () => {
+        let filteredList = campList;
+
+        // 숙소 유형 필터 적용
         if (selectedCampingTypes.length > 0) {
-            const filteredList = campList.filter(camp => {
+            filteredList = filteredList.filter(camp => {
                 const includesSelectedTypes = selectedCampingTypes.some(type => 
                     type === '기타' 
                     ? !['야영장', '글램핑', '카라반'].some(excludedType => camp.induty.includes(excludedType))
@@ -180,57 +230,63 @@ function List({ campList, setCampList }) {
                 );
                 return includesSelectedTypes;
             });
-            setFilteredCampList(filteredList);
-            setDisplayedCampList(filteredList.slice(0, itemsPerPage));
-            setSearchPageNo(1);
-            setNoResults(filteredList.length === 0);
-        } else {
-            setFilteredCampList(campList);
-            setDisplayedCampList(campList.slice(0, itemsPerPage));
-            setNoResults(false);
         }
+
+        // 숙소 환경 필터 적용
+        if (selectedCampingEnvironments.length > 0) {
+            filteredList = filteredList.filter(camp => {
+                const includesSelectedEnvironments = selectedCampingEnvironments.some(env => 
+                    camp.sbrsCl && camp.sbrsCl.includes(env)
+                );
+                return includesSelectedEnvironments;
+            });
+        }
+        
+        // 주변 환경 필터 적용
+        if (selectedAroundEnvironments.length > 0) {
+            filteredList = filteredList.filter(camp => {
+                const includesSelectedAroundEnvironments = selectedAroundEnvironments.some(env => 
+                    camp.posblFcltyCl && camp.posblFcltyCl.includes(env)
+                );
+                return includesSelectedAroundEnvironments;
+            });
+        }
+
+        // 필터링된 목록을 상태에 저장
+        setFilteredCampList(filteredList);
+        setDisplayedCampList(filteredList.slice(0, itemsPerPage));
+        setSearchPageNo(1);
+        setNoResults(filteredList.length === 0);
     };
-    
 
     return (
         <div id="List">
             <Header/>
-            <div className="List_main">
-                <div className={`Camping_type ${showCampingType ? 'show' : ''}`}>
-                    <button className="close" onClick={() => setShowCampingType(false)}>
-                        <span className="material-symbols-rounded">
-                            remove
-                        </span>
-                    </button>
-                    <div className="Camping_type_warp">
-                        <div className="Camping_type_warp_t">
-                            숙소 유형 - ( 복수선택 가능 )
-                        </div>
-                        <div className="Camping_type_warp_m">
-                            <ul>
-                                {['오토캠핑', '글램핑', '카라반'].map(type => (
-                                    <li
-                                        key={type}
-                                        className={selectedCampingTypes.includes(type) ? 'active' : ''}
-                                        onClick={() => handleCampingTypeSelect(type)}
-                                    >
-                                        {type}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                        <div className="Camping_type_warp_bt">
-                            <button onClick={handleCampingTypeConfirm}>
-                                확인
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
+            <CampingTypeFilter 
+                showCampingType={showCampingType}
+                selectedCampingTypes={selectedCampingTypes}
+                handleCampingTypeClick={handleCampingTypeClick}
+                handleCampingTypeSelect={handleCampingTypeSelect}
+                handleCampingTypeConfirm={handleCampingTypeConfirm}
+            />
+            <CampingEnvironmentFilter 
+                showCampingEnvironment={showCampingEnvironment}
+                selectedCampingEnvironments={selectedCampingEnvironments}
+                handleCampingEnvironmentClick={handleCampingEnvironmentClick}
+                handleCampingEnvironmentSelect={handleCampingEnvironmentSelect}
+                handleCampingEnvironmentConfirm={handleCampingEnvironmentConfirm}
+            />
+            <AroundEnvironmentFilter 
+                showAroundEnvironment={showAroundEnvironment}
+                selectedAroundEnvironments={selectedAroundEnvironments}
+                handleAroundEnvironmentClick={handleAroundEnvironmentClick}
+                handleAroundEnvironmentSelect={handleAroundEnvironmentSelect}
+                handleAroundEnvironmentConfirm={handleAroundEnvironmentConfirm}
+            />
+            <div className={`List_main ${showCampingType || showCampingEnvironment || showAroundEnvironment ? 'filter-active' : ''}`}>
                 <div className="List_main_warp">
                     <div className="filter_box">
                         <div className="filter_box_warp">
-
                             <div className="filter_box_item">
                                 <div className="swiper-container3">
                                     <div className="swiper-wrapper">
@@ -246,14 +302,14 @@ function List({ campList, setCampList }) {
                                                 keyboard_arrow_down
                                             </span>
                                         </div>
-                                        <div className="swiper-slide filter_box_bt_select">
-                                            숙소 환경
+                                        <div className="swiper-slide filter_box_bt_select" onClick={handleCampingEnvironmentClick}>
+                                            {selectedCampingEnvironments.length > 0 ? selectedCampingEnvironments.join(', ') : '숙소 환경'}
                                             <span className="material-symbols-rounded">
                                                 keyboard_arrow_down
-                                            </span>                                            
+                                            </span>
                                         </div>
-                                        <div className="swiper-slide filter_box_bt_select">
-                                            주변 환경
+                                        <div className="swiper-slide filter_box_bt_select" onClick={handleAroundEnvironmentClick}>
+                                            {selectedAroundEnvironments.length > 0 ? selectedAroundEnvironments.join(', ') : '주변 환경'}
                                             <span className="material-symbols-rounded">
                                                 keyboard_arrow_down
                                             </span>

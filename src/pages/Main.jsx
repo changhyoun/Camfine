@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import './Main.css';
@@ -319,24 +319,24 @@ function Main() {
                         <div className="swiper-container">
                             <div className="swiper-wrapper">
                                 <div className="swiper-slide">
-                                    <a href='#'>
+                                    <Link to={'https://github.com/changhyoun/Camfine'} target='_blank'>
                                         <img src={main_se1_slide_img1} alt="slide" />
-                                    </a>
+                                    </Link>
                                 </div>
                                 <div className="swiper-slide">
-                                    <a href='#'>
-                                        <img src={main_se1_slide_img1} alt="slide" />
-                                    </a>
+                                    <Link to={'https://github.com/changhyoun/Camfine'}  target='_blank'>
+                                        <img src='https://image.ajunews.com/content/image/2019/10/02/20191002111624119007.jpg' alt="slide" />
+                                    </Link>
                                 </div>
                                 <div className="swiper-slide">
-                                    <a href='#'>
-                                        <img src={main_se1_slide_img1} alt="slide" />
-                                    </a>
+                                    <Link to={'https://github.com/changhyoun/Camfine'}  target='_blank'>
+                                        <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFT7EXJs4wS6XEqfytlAAS2b6GQ2pGgw0-gA&s' alt="slide" />
+                                    </Link>
                                 </div>
                                 <div className="swiper-slide">
-                                    <a href='#'>
-                                        <img src={main_se1_slide_img1} alt="slide" />
-                                    </a>
+                                    <Link to={'https://github.com/changhyoun/Camfine'}  target='_blank'>
+                                        <img src='https://file.mk.co.kr/meet/neds/2020/11/image_readtop_2020_1181395_16055901934434873.jpg' alt="slide" />
+                                    </Link>
                                 </div>
                             </div>
                             <div className="swiper-pagination"></div>

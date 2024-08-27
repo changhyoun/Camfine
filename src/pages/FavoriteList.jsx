@@ -4,7 +4,7 @@ import { collection, query, where, getDocs, deleteDoc, doc } from 'firebase/fire
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { FavoriteList_unplus,logoWhite } from '../components/Images';
+import { FavoriteList_unplus,logoWhite,FavoriteList_here_bubble,FavoriteList_here_man } from '../components/Images';
 import './FavoriteList.css';
 
 const defaultImageUrl = 'https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
@@ -73,6 +73,10 @@ function FavoriteList() {
                                                         alt={fav.name}
                                                         style={{ cursor: 'pointer' }}
                                                     />
+                                                    <img src={FavoriteList_here_man} alt="FavoriteList_here_man" />
+                                                    <img src={FavoriteList_here_bubble} alt="FavoriteList_here_bubble" />
+                                                    <p>이미지를<br/>클릭해보세요!</p>
+                                                    
                                                 </Link>
                                             </div>
                                             <div className="favorite_campList_bt">

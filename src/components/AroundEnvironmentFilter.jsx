@@ -1,19 +1,19 @@
 import React, { useRef, useEffect } from 'react';
-import './CampingTypeFilter.css';
+import './AroundEnvironmentFilter.css';
 
-function CampingTypeFilter({ showCampingType, selectedCampingTypes, handleCampingTypeClick, handleCampingTypeSelect, handleCampingTypeConfirm }) {
+function AroundEnvironmentFilter({ showAroundEnvironment, selectedAroundEnvironments = [], handleAroundEnvironmentClick, handleAroundEnvironmentSelect, handleAroundEnvironmentConfirm }) {
     const resizeHandleRef = useRef(null);
-    const campingTypeRef = useRef(null);
+    const AroundEnvironmentRef = useRef(null);
 
     useEffect(() => {
         const handleMouseDown = (event) => {
-            if (resizeHandleRef.current && campingTypeRef.current) {
+            if (resizeHandleRef.current && AroundEnvironmentRef.current) {
                 const startY = event.clientY;
-                const startHeight = campingTypeRef.current.offsetHeight;
+                const startHeight = AroundEnvironmentRef.current.offsetHeight;
 
                 const onMouseMove = (moveEvent) => {
                     const newHeight = startHeight + (startY - moveEvent.clientY);
-                    campingTypeRef.current.style.height = `${newHeight}px`;
+                    AroundEnvironmentRef.current.style.height = `${newHeight}px`;
                 };
 
                 const onMouseUp = () => {
@@ -38,32 +38,32 @@ function CampingTypeFilter({ showCampingType, selectedCampingTypes, handleCampin
     }, []);
 
     return (
-        <div ref={campingTypeRef} className={`Camping_type ${showCampingType ? 'show' : 'hidden'}`}>
+        <div ref={AroundEnvironmentRef} className={`Around_Environment ${showAroundEnvironment ? 'show' : 'hidden'}`}>
             <div ref={resizeHandleRef} className="resize-handle"></div>
-            <button className="close" onClick={handleCampingTypeClick}>
+            <button className="close" onClick={handleAroundEnvironmentClick}>
                 <span className="material-symbols-rounded">
                     remove
                 </span>
             </button>
-            <div className="Camping_type_warp">
-                <div className="Camping_type_warp_t">
-                    숙소 유형 - ( 복수선택 가능 )
+            <div className="Around_Environment_warp">
+                <div className="Around_Environment_warp_t">
+                    숙소 환경 - ( 복수선택 가능 )
                 </div>
-                <div className="Camping_type_warp_m">
+                <div className="Around_Environment_warp_m">
                     <ul>
-                        {['오토캠핑', '글램핑', '카라반'].map(type => (
+                        {['계곡', '바다', '산책로', '낚시', '산'].map(type => (
                             <li
                                 key={type}
-                                className={selectedCampingTypes.includes(type) ? 'active' : ''}
-                                onClick={() => handleCampingTypeSelect(type)}
+                                className={selectedAroundEnvironments.includes(type) ? 'active' : ''}
+                                onClick={() => handleAroundEnvironmentSelect(type)}
                             >
                                 {type}
                             </li>
                         ))}
                     </ul>
                 </div>
-                <div className="Camping_type_warp_bt">
-                    <button onClick={handleCampingTypeConfirm}>
+                <div className="Around_Environment_warp_bt">
+                    <button onClick={handleAroundEnvironmentConfirm}>
                         확인
                     </button>
                 </div>
@@ -72,4 +72,4 @@ function CampingTypeFilter({ showCampingType, selectedCampingTypes, handleCampin
     );
 }
 
-export default CampingTypeFilter;
+export default AroundEnvironmentFilter;

@@ -48,9 +48,9 @@
             
             .favorite_campList{
                 width: 100%;
-                border: #BBB0B0;
+                border: 1px solid #BBB0B0;
                 margin-bottom: 20px;
-                height: 200px;
+                height: 220px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -69,12 +69,40 @@
                         width: 100%;
                         height: 70%;
                         border-radius: 10px;
-                        overflow: hidden;
                         box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
-                        img{
+                        position: relative;
+                        p{
+                            position: absolute;
+                            top: 18%;
+                            left: 28%;
+                            color: #D4D9D1;
+                            font-family: 'BinggraeSamanco';
+                            font-size: 1em;
+                            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+                        }
+                        img:nth-of-type(1){
+                            &:hover{
+                                filter: brightness(0.7);
+                            }
+                            transition: 0.3s all ease;
+                            border-radius: 10px;
                             width: 100%;
                             height: 100%;
                             object-fit: cover;
+                        }
+                        img:nth-of-type(2){
+                            position: absolute;
+                            bottom: -7px;
+                            left: 0;
+                            width: 90px;
+                            filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.25));
+                        }
+                        img:nth-of-type(3){
+                            position: absolute;
+                            top: 35%;
+                            transform: translateY(-50%);
+                            left: 24%;
+                            filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.25));
                         }
                     }
                     & > div:nth-of-type(2){
@@ -87,13 +115,24 @@
                             height: 100%;
                             display: flex;
                             flex-direction: column;
-                            justify-content: space-around;
+                            justify-content: center;
                             h3{
                                 font-family: 'BinggraeMelona';
+                                margin-bottom: 1%;
+                                overflow:hidden;
+                                text-overflow:ellipsis;
+                                white-space:nowrap;
+                                font-size: 1em;
+                                color: #333;
+                   
                             }
                             p{
                                 color: #666;
                                 font-family: 'BinggraeMelona';
+                                overflow:hidden;
+                                text-overflow:ellipsis;
+                                white-space:nowrap;
+                                font-size: 0.7em;
                             }
                             
                         }
@@ -105,10 +144,17 @@
                             justify-content: center;
                             position: relative;
                             cursor: pointer;
+                            &::before{
+                                opacity: 0;
+                                display: none;
+                                transition: all 0.3s ease;
+                            }
                             &:hover{
                                 &::before{
+                                    display: block;
                                     content: "좋아요 취소";
                                     width: 100px;
+                                    opacity: 1;
                                     top: -25px;
                                     position: absolute;
                                     height: 25px;
@@ -121,10 +167,11 @@
                                     justify-content: center;
                                     font-family: 'BinggraeSamanco';
                                     font-size: 1em;
-                                    transition: all 0.3s ease;
+                                    
                                 }
                             }
                             img{
+                                border: 1px solid #f7f5f5;
                                 border-radius: 50%;
                                 padding: 5px;
                                 display: flex;
