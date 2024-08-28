@@ -325,5 +325,117 @@
                 }
             }
         }
+        .main_se4 {
+            width: 100%;
+            height: 230px;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden; /* 최대 2줄 넘지 않도록 overflow 추가 */
+            
+            & > div:nth-of-type(1) {
+                width: 100%;
+                height: 45px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                color: #333;
+                font-family: 'BinggraeMelona';
+                span {
+                    font-size: 0.8em;
+                    color: #a7a7a7;
+                }
+            }
+        
+            & > div:nth-of-type(2) {
+                width: 100%;
+                height: calc(100% - 55px);
+                border-radius: 15px;
+                box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+                position: relative;
+                &::before,
+                &::after {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    height: 100%;
+                    width: 15%;
+                    z-index: 10;
+                    background-image: linear-gradient(90deg, 
+                        rgba(255, 255, 255, 0.5) 0%, 
+                        rgba(255, 255, 255, 1) 100%);
+                }
+        
+                &::before {
+                    left: 50%;
+                    margin-left: -50%;
+                }
+        
+                &::after {
+                    right: 50%;
+                    margin-right: -50%;
+                }
+                div:nth-of-type(1){
+                    width: 100%;
+                    height: 70px;
+                    line-height: 70px;
+                    white-space: nowrap;
+                    animation: slideLeft 15s linear infinite;
+                    span{
+                        border-radius: 50px;
+                        padding: 4px 20px; 
+                        margin-right: 3%;
+                        border: 1px solid #a7a7a7;
+                        color: #a7a7a7;
+                        cursor: pointer;
+                        font-family: 'BinggraeSamanco';
+                    }
+                }
+                div:nth-of-type(2){
+                    width: 100%;
+                    height: 70px;
+                    white-space: nowrap;
+                    line-height: 70px;
+                    position: relative;
+                    animation: slideRight 15s linear infinite;
+                    
+                    span{
+                        padding: 4px 20px; 
+                        margin-right: 3%;
+                        border-radius: 50px;
+                        border: 1px solid #a7a7a7;
+                        color: #a7a7a7;
+                        cursor: pointer;
+                        font-family: 'BinggraeSamanco';
+                        &:nth-child(1){
+                            margin-left: -15%;
+                        }
+                      
+                    }
+                   
+                }
+            
+            }
+        }
+    
+        
+    }
+}
+
+@keyframes slideRight {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+@keyframes slideLeft {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-100%);
     }
 }

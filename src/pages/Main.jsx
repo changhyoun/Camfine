@@ -389,6 +389,22 @@ function Main() {
                             </div>
                         </div>
                     </div>
+                    <div className="main_se4">
+                        <div className="main_se4_tx">
+                            키워드 추천 😎
+                            <br /><span>키워드 클릭시 키워드를 필터링하여 목록페이지로 이동되요!</span>
+                        </div>
+                        <div className="main_se4_box">
+                            <div className="main_se4_box_txline1">
+                                <span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span>
+                            </div>
+                            <div className="main_se4_box_txline2">
+                                <span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span>
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
             <Footer />

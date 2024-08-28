@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-import { SearchList_main_statistics_lt_back, SearchList_main_statistics_rt_back, no_list_man, no_list_caution, LoadingList } from '../components/Images';
+import { SearchList_main_statistics_lt_back, SearchList_main_statistics_rt_back, no_list_man, no_list_caution, LoadingList,list_click_ic } from '../components/Images';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
@@ -56,7 +56,7 @@ function SearchList() {
                         MobileOS: 'ETC',
                         MobileApp: 'AppTest',
                         _type: 'json',
-                        numOfRows: 10,
+                        numOfRows: 1000,
                         pageNo: page
                     }
                 });
@@ -91,7 +91,9 @@ function SearchList() {
         } finally {
             setLoading(false);
         }
+
     };
+
 
     useEffect(() => {
         if (loading) {
@@ -258,6 +260,7 @@ function SearchList() {
                                                     <p>{camp.addr1}</p>
                                                     <div className="camp_info_ck">
                                                         클릭시 상세 페이지로 이동됩니다.
+                                                        <img src={list_click_ic} alt="list_click_ic" />
                                                     </div>
                                                 </div>
                                             </div>

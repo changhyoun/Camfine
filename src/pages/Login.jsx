@@ -3,7 +3,9 @@ import './Login.css';
 import { logoBlue, Login_pop } from '../components/Images';
 import { auth } from '../firebase'; 
 import { signInWithEmailAndPassword } from 'firebase/auth'; 
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import GoMain from '../components/GoMain';
+
 
 function Login() {
     const [emailLocal, setEmailLocal] = useState('');
@@ -41,8 +43,13 @@ function Login() {
         setPasswordVisible(!passwordVisible); // 비밀번호 가시성 상태 변경
     };
 
+    const goHome = () =>{
+        navigate('/')
+    }
+
     return (
         <div id="Login">
+  
             {showError && (
                 <div className="login_cancel show">
                     <div className="login_cancel_pop">
@@ -61,7 +68,8 @@ function Login() {
                 </div>
             )}
             <div className="Login_Warp">
-                <img src={logoBlue} alt="logoBlue" />
+                <GoMain/>
+                <img src={logoBlue} alt="logoBlue" onClick={goHome} />
                 <p className='log_m_p'>회원가입을 아직 못하셨나요?<br /><Link to={"/signUp"}> 회원가입을 해보세요!</Link></p>
                 <form onSubmit={handleSubmit}>
                     <div className="email">

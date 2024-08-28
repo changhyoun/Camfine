@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
+
 import './SignUp.css';
 import { logoBlue, SignUp_pop } from '../components/Images';
 import { auth, db } from '../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { doc, setDoc } from 'firebase/firestore';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
+import GoMain from '../components/GoMain';
 
 function SignUp() {
     const [emailLocal, setEmailLocal] = useState('');
@@ -18,6 +21,7 @@ function SignUp() {
     const [emailError, setEmailError] = useState('');
     const [signupSuccess, setSignupSuccess] = useState(false); 
     const [videoKey, setVideoKey] = useState(0); 
+    const navigate = useNavigate();
 
     const hideErrorMessage = (selector) => {
         const element = document.querySelector(selector);
@@ -166,6 +170,10 @@ function SignUp() {
         video.currentTime = video.duration / 2;
     };
 
+    const goHome = () =>{
+        navigate('/')
+    }
+
     return (
         <div id="SignUp">
             {signupSuccess && (
@@ -188,13 +196,15 @@ function SignUp() {
                 </div>
             )}
             <div className="SignUp_Warp">
-                <img src={logoBlue} alt="logoBlue" />
+                <GoMain/>
+                <img src={logoBlue} alt="logoBlue" onClick={goHome} />
                 <p className='sign_m_p'>회원가입을 진행하셨나요? <Link to={"/Login"}>로그인 해보세요!</Link></p>
                 <form onSubmit={handleSubmit}>
                     <div className="email">
                         <legend>이메일</legend>
                         <div className="email_box">
                             <input
+                            
                                 type="text"
                                 placeholder='이메일을 입력하세요.'
                                 value={emailLocal}
@@ -233,7 +243,7 @@ function SignUp() {
                                 person
                             </span>
                             <input
-                                className="box"
+                                className="box SignUp_input"
                                 type="text"
                                 placeholder='닉네임을 입력하세요.'
                                 

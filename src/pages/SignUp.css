@@ -7,11 +7,15 @@
     justify-content: center;
     & > div{
         width: 80%;
-        height: 80%;
+        height: 85%;
         display: flex;
         align-items: center;
         flex-direction: column;
         justify-content: center;
+        position: relative;
+        img{
+            cursor: pointer;
+        }
         p{
             color: #333333;
             margin: 0 auto;
@@ -22,6 +26,9 @@
                 font-weight: bold;
                 color: #5092CF;
                 cursor: pointer;
+                text-decoration: underline;
+                text-underline-offset: 5px;
+                border-radius: 5px;
             }
         form{
             width: 100%;
@@ -55,7 +62,7 @@
                     height: auto;
                     align-items: center;
                     justify-content: space-between;
-                    height: 42px;
+                    height: 45px;
                     & > input{
                         height: 100%;
                         width: 47%;
@@ -100,7 +107,7 @@
                 }
                 & > div > input{
                     width: calc(100% - 10%);
-                    height: 40px;
+                    height: 45px;
                     border-radius: 5px;
                     outline: none;
                     border: 0;
@@ -110,7 +117,7 @@
                 &:nth-of-type(3) > div > input,
                 &:nth-of-type(4) > div > input{
                     width: calc(100% - 20%);
-                    height: 40px;
+                    height: 45px;
                     border-radius: 5px;
                     outline: none;
                     border: 0;
@@ -147,7 +154,7 @@
             height: 60px;
             border: none;
             border-radius: 5px;
-            font-family: 'BinggraeMelona';
+            font-family: 'BinggraeMelona-bold';
             font-size: 1em;
             margin-top: 5%;
             cursor: pointer;

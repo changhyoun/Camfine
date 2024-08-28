@@ -74,6 +74,8 @@ function List({ campList, setCampList }) {
                     pageNo: page
                 }
             });
+
+            console.log(response.data.body)
             
             if (response.data && response.data.response && response.data.response.body && response.data.response.body.items && response.data.response.body.items.item) {
                 const newCamps = response.data.response.body.items.item;
@@ -219,201 +221,199 @@ function List({ campList, setCampList }) {
 
     const applyFilters = () => {
         let filteredList = campList;
-
+    
         // 숙소 유형 필터 적용
         if (selectedCampingTypes.length > 0) {
-            filteredList = filteredList.filter(camp => {
-                const includesSelectedTypes = selectedCampingTypes.some(type => 
-                    type === '기타' 
-                    ? !['야영장', '글램핑', '카라반'].some(excludedType => camp.induty.includes(excludedType))
-                    : camp.induty.includes(campingTypeMapping[type])
-                );
-                return includesSelectedTypes;
-            });
+            filteredList = filteredList.filter(camp => 
+                selectedCampingTypes.every(type => 
+                    camp.induty && camp.induty.includes(campingTypeMapping[type])
+                )
+            );
         }
-
+    
         // 숙소 환경 필터 적용
         if (selectedCampingEnvironments.length > 0) {
-            filteredList = filteredList.filter(camp => {
-                const includesSelectedEnvironments = selectedCampingEnvironments.some(env => 
+            filteredList = filteredList.filter(camp => 
+                selectedCampingEnvironments.every(env => 
                     camp.sbrsCl && camp.sbrsCl.includes(env)
-                );
-                return includesSelectedEnvironments;
-            });
+                )
+            );
         }
-        
+    
         // 주변 환경 필터 적용
         if (selectedAroundEnvironments.length > 0) {
-            filteredList = filteredList.filter(camp => {
-                const includesSelectedAroundEnvironments = selectedAroundEnvironments.some(env => 
+            filteredList = filteredList.filter(camp => 
+                selectedAroundEnvironments.every(env => 
                     camp.posblFcltyCl && camp.posblFcltyCl.includes(env)
-                );
-                return includesSelectedAroundEnvironments;
-            });
+                )
+            );
         }
-
-        // 필터링된 목록을 상태에 저장
+    
+        // 필터링된 목록을 상태에 저장하고 화면에 출력할 목록으로 설정
         setFilteredCampList(filteredList);
-        setDisplayedCampList(filteredList.slice(0, itemsPerPage));
+        setDisplayedCampList(filteredList.slice(0, itemsPerPage)); // 이 부분에서 필터링된 목록을 설정
         setSearchPageNo(1);
         setNoResults(filteredList.length === 0);
     };
-
+    
+    
+    
+    
     return (
         <div id="List">
-            <Header/>
-            <CampingTypeFilter 
-                showCampingType={showCampingType}
-                selectedCampingTypes={selectedCampingTypes}
-                handleCampingTypeClick={handleCampingTypeClick}
-                handleCampingTypeSelect={handleCampingTypeSelect}
-                handleCampingTypeConfirm={handleCampingTypeConfirm}
-            />
-            <CampingEnvironmentFilter 
-                showCampingEnvironment={showCampingEnvironment}
-                selectedCampingEnvironments={selectedCampingEnvironments}
-                handleCampingEnvironmentClick={handleCampingEnvironmentClick}
-                handleCampingEnvironmentSelect={handleCampingEnvironmentSelect}
-                handleCampingEnvironmentConfirm={handleCampingEnvironmentConfirm}
-            />
-            <AroundEnvironmentFilter 
-                showAroundEnvironment={showAroundEnvironment}
-                selectedAroundEnvironments={selectedAroundEnvironments}
-                handleAroundEnvironmentClick={handleAroundEnvironmentClick}
-                handleAroundEnvironmentSelect={handleAroundEnvironmentSelect}
-                handleAroundEnvironmentConfirm={handleAroundEnvironmentConfirm}
-            />
-            <div className={`List_main ${showCampingType || showCampingEnvironment || showAroundEnvironment ? 'filter-active' : ''}`}>
-                <div className="List_main_warp">
-                    <div className="filter_box">
-                        <div className="filter_box_warp">
-                            <div className="filter_box_item">
-                                <div className="swiper-container3">
-                                    <div className="swiper-wrapper">
-                                        <div className="swiper-slide filter_box_bt_select" onClick={handleCampingTypeClick}>
-                                            {selectedCampingTypes.length > 0 ? selectedCampingTypes.join(', ') : '숙소 유형'}
-                                            <span className="material-symbols-rounded">
-                                                keyboard_arrow_down
-                                            </span>
-                                        </div>
-                                        <div className="swiper-slide filter_box_bt_select">
-                                            지역
-                                            <span className="material-symbols-rounded">
-                                                keyboard_arrow_down
-                                            </span>
-                                        </div>
-                                        <div className="swiper-slide filter_box_bt_select" onClick={handleCampingEnvironmentClick}>
-                                            {selectedCampingEnvironments.length > 0 ? selectedCampingEnvironments.join(', ') : '숙소 환경'}
-                                            <span className="material-symbols-rounded">
-                                                keyboard_arrow_down
-                                            </span>
-                                        </div>
-                                        <div className="swiper-slide filter_box_bt_select" onClick={handleAroundEnvironmentClick}>
-                                            {selectedAroundEnvironments.length > 0 ? selectedAroundEnvironments.join(', ') : '주변 환경'}
-                                            <span className="material-symbols-rounded">
-                                                keyboard_arrow_down
-                                            </span>
-                                        </div>
+        <Header/>
+        {/* 필터 컴포넌트는 기존 코드 그대로 유지 */}
+        <CampingTypeFilter 
+            showCampingType={showCampingType}
+            selectedCampingTypes={selectedCampingTypes}
+            handleCampingTypeClick={handleCampingTypeClick}
+            handleCampingTypeSelect={handleCampingTypeSelect}
+            handleCampingTypeConfirm={handleCampingTypeConfirm}
+        />
+        <CampingEnvironmentFilter 
+            showCampingEnvironment={showCampingEnvironment}
+            selectedCampingEnvironments={selectedCampingEnvironments}
+            handleCampingEnvironmentClick={handleCampingEnvironmentClick}
+            handleCampingEnvironmentSelect={handleCampingEnvironmentSelect}
+            handleCampingEnvironmentConfirm={handleCampingEnvironmentConfirm}
+        />
+        <AroundEnvironmentFilter 
+            showAroundEnvironment={showAroundEnvironment}
+            selectedAroundEnvironments={selectedAroundEnvironments}
+            handleAroundEnvironmentClick={handleAroundEnvironmentClick}
+            handleAroundEnvironmentSelect={handleAroundEnvironmentSelect}
+            handleAroundEnvironmentConfirm={handleAroundEnvironmentConfirm}
+        />
+        <div className={`List_main ${showCampingType || showCampingEnvironment || showAroundEnvironment ? 'filter-active' : ''}`}>
+            <div className="List_main_warp">
+                <div className="filter_box">
+                    <div className="filter_box_warp">
+                        <div className="filter_box_item">
+                            <div className="swiper-container3">
+                                <div className="swiper-wrapper">
+                                    <div className="swiper-slide filter_box_bt_select" onClick={handleCampingTypeClick}>
+                                        {selectedCampingTypes.length > 0 ? selectedCampingTypes.join(', ') : '숙소 유형'}
+                                        <span className="material-symbols-rounded">
+                                            keyboard_arrow_down
+                                        </span>
+                                    </div>
+                                    <div className="swiper-slide filter_box_bt_select">
+                                        지역
+                                        <span className="material-symbols-rounded">
+                                            keyboard_arrow_down
+                                        </span>
+                                    </div>
+                                    <div className="swiper-slide filter_box_bt_select" onClick={handleCampingEnvironmentClick}>
+                                        {selectedCampingEnvironments.length > 0 ? selectedCampingEnvironments.join(', ') : '숙소 환경'}
+                                        <span className="material-symbols-rounded">
+                                            keyboard_arrow_down
+                                        </span>
+                                    </div>
+                                    <div className="swiper-slide filter_box_bt_select" onClick={handleAroundEnvironmentClick}>
+                                        {selectedAroundEnvironments.length > 0 ? selectedAroundEnvironments.join(', ') : '주변 환경'}
+                                        <span className="material-symbols-rounded">
+                                            keyboard_arrow_down
+                                        </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="camp_list">
+                </div>
+                <div className="camp_list">
                     <div className="camp_list_warp">
-    {noResults ? (
-        <div className="no_results">
-            <div className="no_results_img_warp">
-                <img src={no_list_man} alt="검색 결과 없음 이미지" />
-                <img src={no_list_caution} alt="주의 이미지" />
-            </div>
-            <h3>검색결과가 없어요</h3>
-            <button onClick={reloadPage} className="retry_button">
-                다시 찾아보기
-            </button>
-        </div>
-    ) : (
-        displayedCampList.map((camp, index) => {
-            const isDefaultImage = camp.firstImageUrl === "" || camp.firstImageUrl === null;
-            return (
-                <Link
-                    to={{
-                        pathname: `/camp/${camp.contentId}`,
-                    }}
-                    state={{ campList }}  // campList를 state로 전달
-                    className={`camp_list_box ${hoveredIndex === index ? 'hovered' : ''}`}
-                    key={index}
-                    ref={index === displayedCampList.length - 1 ? lastCampElementRef : null}
-                >
-                    <img
-                        src={isDefaultImage ? defaultImageUrl : camp.firstImageUrl}
-                        alt="캠핑장 이미지"
-                    />
-                    <div className="camp_list_box_warp">
-                        {isDefaultImage && (
-                            <p className="none">대체 이미지</p>
-                        )}
-                        <div className="camp_info">
-                            <h3>{camp.facltNm}</h3>
-                            <p>{camp.addr1}</p>
-                            <div className="camp_info_ck">
-                                클릭시 상세 페이지로 이동됩니다.
-                                <img src={list_click_ic} alt="list_click_ic" />
+                        {noResults ? (
+                            <div className="no_results">
+                                <div className="no_results_img_warp">
+                                    <img src={no_list_man} alt="검색 결과 없음 이미지" />
+                                    <img src={no_list_caution} alt="주의 이미지" />
+                                </div>
+                                <h3>검색결과가 없어요</h3>
+                                <button onClick={reloadPage} className="retry_button">
+                                    다시 찾아보기
+                                </button>
                             </div>
-                        </div>
+                        ) : (
+                            displayedCampList.map((camp, index) => {
+                                const isDefaultImage = camp.firstImageUrl === "" || camp.firstImageUrl === null;
+                                return (
+                                    <Link
+                                        to={{
+                                            pathname: `/camp/${camp.contentId}`,
+                                        }}
+                                        state={{ campList }}  // campList를 state로 전달
+                                        className={`camp_list_box ${hoveredIndex === index ? 'hovered' : ''}`}
+                                        key={index}
+                                        ref={index === displayedCampList.length - 1 ? lastCampElementRef : null}
+                                    >
+                                        <img
+                                            src={isDefaultImage ? defaultImageUrl : camp.firstImageUrl}
+                                            alt="캠핑장 이미지"
+                                        />
+                                        <div className="camp_list_box_warp">
+                                            {isDefaultImage && (
+                                                <p className="none">대체 이미지</p>
+                                            )}
+                                            <div className="camp_info">
+                                                <h3>{camp.facltNm}</h3>
+                                                <p>{camp.addr1}</p>
+                                                <div className="camp_info_ck">
+                                                    클릭시 상세 페이지로 이동됩니다.
+                                                    <img src={list_click_ic} alt="list_click_ic" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div 
+                                            className="camp_info_briefly"
+                                            onMouseEnter={() => setHoveredIndex(index)}
+                                            onMouseLeave={() => setHoveredIndex(null)}
+                                        >
+                                            정보 간략히 보기
+                                            <span className="material-symbols-rounded">
+                                                keyboard_double_arrow_down
+                                            </span>
+                                            <div className="camp_info_details">
+                                                <b>ㆍ 편의 시설</b>
+                                                <ul>
+                                                {camp.sbrsCl ? camp.sbrsCl.split(',').map((item, index) => (
+                                                     <li className="info_item" key={index}> {item.trim()}</li>
+                                                )) : <li className="info_item">제공된 정보가 없습니다.</li>}
+                                                </ul>
+                                                <b>ㆍ 업종 정보</b>
+                                                <ul>
+                                                {camp.induty ? camp.induty.split(',').map((item, index) => (
+                                                    <li className="info_item" key={index}>{item.trim()}</li>
+                                                )) : <li className="info_item">제공된 정보가 없습니다.</li>}<br/>
+                                                </ul>
+                                                
+                                                <b>ㆍ 애견 동반 여부</b>
+                                                <ul>
+                                                   <li>{camp.animalCmgCl === '가능' ? '가능' : '불가능'}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                );
+                            })
+                        )}
+                        {loading && (
+                            <div className="load_list">
+                                <div className="loader"></div>
+                                캠핑장 데이터를 불러오는 중입니다...
+                            </div>
+                        )}
+                        {!hasMore && !noResults && (
+                            <div className="no_more_data">
+                                더 이상 캠핑장이 없어요 😅
+                            </div>
+                        )}
                     </div>
-                    <div 
-                        className="camp_info_briefly"
-                        onMouseEnter={() => setHoveredIndex(index)}
-                        onMouseLeave={() => setHoveredIndex(null)}
-                    >
-                        정보 간략히 보기
-                        <span className="material-symbols-rounded">
-                            keyboard_double_arrow_down
-                        </span>
-                        <div className="camp_info_details">
-                            <b>ㆍ 편의 시설</b>
-                            <ul>
-                            {camp.sbrsCl ? camp.sbrsCl.split(',').map((item, index) => (
-                                 <li className="info_item" key={index}> {item.trim()}</li>
-                            )) : <li className="info_item">제공된 정보가 없습니다.</li>}
-                            </ul>
-                            <b>ㆍ 업종 정보</b>
-                            <ul>
-                            {camp.induty ? camp.induty.split(',').map((item, index) => (
-                                <li className="info_item" key={index}>{item.trim()}</li>
-                            )) : <li className="info_item">제공된 정보가 없습니다.</li>}<br/>
-                            </ul>
-                            
-                            <b>ㆍ 애견 동반 여부</b>
-                            <ul>
-                               <li>{camp.animalCmgCl === '가능' ? '가능' : '불가능'}</li>
-                            </ul>
-                        </div>
-                    </div>
-                </Link>
-            );
-        })
-    )}
-    {loading && (
-        <div className="load_list">
-            <div className="loader"></div>
-            캠핑장 데이터를 불러오는 중입니다...
-        </div>
-    )}
-    {!hasMore && !noResults && (
-        <div className="no_more_data">
-            캠핑장이 없어요 😅
-        </div>
-    )}
-</div>
-
-</div>
                 </div>
             </div>
-            <Footer/>
         </div>
-    );
+        <Footer/>
+    </div>
+);
 }
 
 export default List;

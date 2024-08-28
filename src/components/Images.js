@@ -125,6 +125,10 @@ import FavoriteList_here_man from "../assets/FavoriteList_here_man.png"
 export {FavoriteList_here_man}
 import FavoriteList_here_bubble from "../assets/FavoriteList_here_bubble.png"
 export {FavoriteList_here_bubble}
+import FavoriteList_not from "../assets/FavoriteList_not.png"
+export {FavoriteList_not}
+
+
 
 
 

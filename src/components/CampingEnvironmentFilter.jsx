@@ -51,7 +51,7 @@ function CampingEnvironmentFilter({ showCampingEnvironment, selectedCampingEnvir
                 </div>
                 <div className="Camping_Environment_warp_m">
                     <ul>
-                        {['무선인터넷', '물놀이장', '놀이터', '운동시설', '트램폴린', '마트'].map(type => (
+                        {['무선인터넷', '물놀이장', '놀이터', '운동시설', '트렘폴린', '마트'].map(type => (
                             <li
                                 key={type}
                                 className={selectedCampingEnvironments.includes(type) ? 'active' : ''}
