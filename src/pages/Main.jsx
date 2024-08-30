@@ -15,7 +15,7 @@ function haversine(lat1, lon1, lat2, lon2) {
     function toRad(x) {
         return x * Math.PI / 180;
     }
-    
+
     const R = 6371; // 지구 반지름 (킬로미터 단위)
     const dLat = toRad(lat2 - lat1);
     const dLon = toRad(lon2 - lon1);
@@ -28,7 +28,6 @@ function haversine(lat1, lon1, lat2, lon2) {
     return d;
 }
 
-// 한글 자음/모음/종성 분리 함수
 const getChosung = (str) => {
     const cho = [
         'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ',
@@ -49,14 +48,15 @@ function Main() {
     const [searchQuery, setSearchQuery] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [highlightedIndex, setHighlightedIndex] = useState(-1);
-    const [showSuggestions, setShowSuggestions] = useState(false); // 추천 검색어 표시 상태
+    const [showSuggestions, setShowSuggestions] = useState(false); 
+    const [selectedCampType, setSelectedCampType] = useState('계곡'); // 기본값을 '계곡'으로 설정
+    const [filteredCampSites, setFilteredCampSites] = useState([]); // 필터링된 캠핑장 데이터
     const navigate = useNavigate();
 
     const searchSuggestions = [
         { text: '글램핑', icon: 'camping' },
         { text: '카라반', icon: 'airport_shuttle' },
         { text: '포레스트', icon: 'action_key' },
-        
         { text: '대전', icon: 'share_location' },
         { text: '대구', icon: 'share_location' },
         { text: '서울', icon: 'share_location' },
@@ -75,7 +75,7 @@ function Main() {
                     if (navigator.geolocation) {
                         navigator.geolocation.getCurrentPosition((position) => {
                             const { latitude, longitude } = position.coords;
-                            console.log(`현재 위치 - 위도: ${latitude}, 경도: ${longitude}`); // 현재 위치 콘솔 로그
+                            console.log(`현재 위치 - 위도: ${latitude}, 경도: ${longitude}`);
                             setUserLocation({ lat: latitude, lng: longitude });
                         }, (error) => {
                             console.error('Error getting user location:', error);
@@ -89,7 +89,7 @@ function Main() {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition((position) => {
                         const { latitude, longitude } = position.coords;
-                        console.log(`현재 위치 - 위도: ${latitude}, 경도: ${longitude}`); // 현재 위치 콘솔 로그
+                        console.log(`현재 위치 - 위도: ${latitude}, 경도: ${longitude}`);
                         setUserLocation({ lat: latitude, lng: longitude });
                     }, (error) => {
                         console.error('Error getting user location:', error);
@@ -114,9 +114,9 @@ function Main() {
             const response = await axios.get('http://apis.data.go.kr/B551011/GoCamping/locationBasedList', {
                 params: {
                     ServiceKey: CAMPING_API_KEY,
-                    mapX: userLocation.lng, // 경도
-                    mapY: userLocation.lat, // 위도
-                    radius: 50000, // 반경 (미터 단위)
+                    mapX: userLocation.lng,
+                    mapY: userLocation.lat,
+                    radius: 50000,
                     MobileOS: 'ETC',
                     MobileApp: 'AppTest',
                     _type: 'json'
@@ -157,9 +157,14 @@ function Main() {
         }
     };
 
+    // nearbyCampingSites가 변경되면 필터링 수행
+    useEffect(() => {
+        if (nearbyCampingSites.length > 0) {
+            filterCampingSites(selectedCampType);
+        }
+    }, [nearbyCampingSites]);
 
     useEffect(() => {
-        // 첫 번째 Swiper 초기화
         new window.Swiper('.swiper-container', {
             pagination: {
                 el: '.swiper-pagination',
@@ -181,7 +186,6 @@ function Main() {
     }, []);
 
     useEffect(() => {
-        // 두 번째 Swiper 초기화
         new window.Swiper('.swiper-container2', {
             navigation: {
                 nextEl: '.swiper-button-next2',
@@ -203,12 +207,17 @@ function Main() {
         return text.match(regex).join('<br />');
     };
 
-    const handleClick = (type) => {
-        navigate('/list', { state: { selectedType: type } });
+    const handleClick = (selectedType) => {
+        navigate('/list', { state: { selectedType: selectedType } });
     };
 
     const handleSlideClick = (id) => {
         navigate(`/camp/${id}`, { state: { campList: nearbyCampingSites } });
+    };
+
+
+    const handleTypeClick = (selectedType) => {
+        navigate('/list', { state: { selectedType } });
     };
 
     const handleSearchSubmit = (e) => {
@@ -228,8 +237,8 @@ function Main() {
             const filteredSuggestions = searchSuggestions.filter((suggestion) => {
                 const chosungText = getChosung(suggestion.text);
                 return (
-                    suggestion.text.startsWith(value) || // 일반 검색어 필터링
-                    chosungText.startsWith(chosungInput) // 초성 검색 필터링
+                    suggestion.text.startsWith(value) || 
+                    chosungText.startsWith(chosungInput)
                 );
             });
             setSuggestions(filteredSuggestions);
@@ -241,7 +250,7 @@ function Main() {
     const handleSuggestionClick = (suggestion) => {
         setSearchQuery(suggestion.text);
         setSuggestions([]);
-        setShowSuggestions(false); // 클릭 시 추천어 목록 숨김
+        setShowSuggestions(false);
         navigate('/searchList', { state: { searchQuery: suggestion.text } });
     };
 
@@ -265,19 +274,41 @@ function Main() {
         }
     }, [highlightedIndex, suggestions]);
 
+    const handleFilterClick = (type) => {
+        setSelectedCampType(type);
+        filterCampingSites(type);
+    };
+
+    const filterCampingSites = (type) => {
+        let filtered = [];
+        if (type === '계곡') {
+            filtered = nearbyCampingSites.filter(site => site.posblFcltyCl && site.posblFcltyCl.includes('계곡'));
+        } else if (type === '산') {
+            filtered = nearbyCampingSites.filter(site => site.posblFcltyCl && site.posblFcltyCl.includes('산'));
+        } else if (type === '마트') {
+            filtered = nearbyCampingSites.filter(site => site.sbrsCl && site.sbrsCl.includes('마트'));
+        }
+        setFilteredCampSites(filtered.sort(() => Math.random() - 0.5).slice(0, 2));
+    };
+
+    const handleRefreshClick = () => {
+        filterCampingSites(selectedCampType);
+    };
+
     return (
         <div id="Main">
             <Header />
             <div className="main">
                 <div className="main_warp">
                     <div className="main_se1">
-                        <div onClick={() => handleClick('오토캠핑')}>
+                        {/* 각 유형을 클릭하면 해당 유형의 캠핑장 목록이 필터링됨 */}
+                        <div onClick={() => handleTypeClick('오토캠핑')}>
                             <Main_se1_box Main_se1_box_ic={main_se1_icon1} Main_se1_box_tx={'오토캠핑'} />
                         </div>
-                        <div onClick={() => handleClick('글램핑')}>
+                        <div onClick={() => handleTypeClick('글램핑')}>
                             <Main_se1_box Main_se1_box_ic={main_se1_icon2} Main_se1_box_tx={'글램핑'} />
                         </div>
-                        <div onClick={() => handleClick('카라반')}>
+                        <div onClick={() => handleTypeClick('카라반')}>
                             <Main_se1_box Main_se1_box_ic={main_se1_icon3} Main_se1_box_tx={'카라반'} />
                         </div>
                     </div>
@@ -290,8 +321,8 @@ function Main() {
                                 value={searchQuery}
                                 onChange={handleInputChange}
                                 onKeyDown={handleKeyDown}
-                                onFocus={() => setShowSuggestions(true)} // 포커스 시 추천어 목록 표시
-                                onBlur={() => setShowSuggestions(false)} // 포커스 해제 시 추천어 목록 숨김
+                                onFocus={() => setShowSuggestions(true)}
+                                onBlur={() => setShowSuggestions(false)}
                             />
                             <span className="material-symbols-rounded" onClick={handleSearchSubmit}>
                                 search
@@ -391,18 +422,53 @@ function Main() {
                     </div>
                     <div className="main_se4">
                         <div className="main_se4_tx">
-                            키워드 추천 😎
-                            <br /><span>키워드 클릭시 키워드를 필터링하여 목록페이지로 이동되요!</span>
+                            <div className="main_se4_lt">
+                                캠핑장 추천해드려요 🧐 
+                            </div>
+                            <div className="main_se4_rt">
+                                <Link to={'./list'}>
+                                더보기
+                                <span className="material-symbols-rounded">
+                                chevron_right
+                                </span>
+                                </Link>
+                            </div>
                         </div>
-                        <div className="main_se4_box">
-                            <div className="main_se4_box_txline1">
-                                <span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span>
-                            </div>
-                            <div className="main_se4_box_txline2">
-                                <span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span><span>글램핑</span>
-                            </div>
-                            
-                            
+                        <div className="main_se4_selectBox">
+                            <button 
+                                onClick={() => handleFilterClick('계곡')}
+                                className={selectedCampType === '계곡' ? 'active' : ''}
+                            >
+                                🌊 계곡 근처
+                            </button>
+                            <button 
+                                onClick={() => handleFilterClick('산')}
+                                className={selectedCampType === '산' ? 'active' : ''}
+                            >
+                                ⛰️ 산 근처
+                            </button>
+                            <button 
+                                onClick={() => handleFilterClick('마트')}
+                                className={selectedCampType === '마트' ? 'active' : ''}
+                            >
+                                🛒 마트 근처
+                            </button>
+                            <span  onClick={handleRefreshClick} className="material-symbols-rounded">refresh</span>
+                        </div>
+                        <div className="main_se4_list_box">
+                            {filteredCampSites.length > 0 ? (
+                                filteredCampSites.map((site, index) => (
+                                    <div className="main_se4_list" key={index}  onClick={() => handleSlideClick(site.contentId)}>
+                                        <img src={site.firstImageUrl || defaultImageUrl} alt="campImg" />
+                                        <div className="camp-info">
+                                            <h3>{site.facltNm}</h3>
+                                            <p>{site.addr1}</p>
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <p>해당 유형의 캠핑장이 없습니다.</p>
+                            )}
                         </div>
                     </div>
                 </div>

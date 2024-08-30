@@ -130,7 +130,7 @@
 
     .camp_list {
         width: 100%;
-        height: calc(100% - 130px);
+        height: calc(100% - 180px);
         border-radius: 15px;
         box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
         border: 1px solid #BBB0B0;
@@ -443,24 +443,3 @@
 
 
 }
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
