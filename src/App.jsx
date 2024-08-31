@@ -10,6 +10,7 @@ import UserList from './UserList';
 import Login from './pages/Login';
 import FavoriteList from './pages/FavoriteList';
 import './App.css';
+import './components/Responsive.css';
 
 
 function App() {

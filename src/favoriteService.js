@@ -5,20 +5,23 @@ import { auth, db } from './firebase';
 export const addFavorite = async (camp) => {
     const user = auth.currentUser;
     if (user) {
-        const favoriteRef = doc(db, 'favorites', `${user.uid}_${camp.contentId}`);
-        await setDoc(favoriteRef, {
+        // undefined 값을 확인하고 기본값 설정
+        const favoriteData = {
             uid: user.uid,
             contentId: camp.contentId,
-            facltNm: camp.facltNm,
-            addr1: camp.addr1,
-            firstImageUrl: camp.firstImageUrl,
-            mapX: camp.mapX, // 추가
-            mapY: camp.mapY, // 추가
-            sbrsCl: camp.sbrsCl, // 추가
-            doNm: camp.doNm, // 추가
-            sigunguNm: camp.sigunguNm, // 추가
-            region : camp.region
-        });
+            facltNm: camp.facltNm ?? '시설명 없음', // 기본값 설정
+            addr1: camp.addr1 ?? '주소 없음', // 기본값 설정
+            firstImageUrl: camp.firstImageUrl ?? '', // 기본값 설정
+            mapX: camp.mapX ?? 0, // 기본값 설정
+            mapY: camp.mapY ?? 0, // 기본값 설정
+            sbrsCl: camp.sbrsCl ?? '시설 정보 없음', // 기본값 설정
+            doNm: camp.doNm ?? '도 정보 없음', // 기본값 설정
+            sigunguNm: camp.sigunguNm ?? '시군구 정보 없음', // 기본값 설정
+            region: camp.region ?? '지역 정보 없음' // 기본값 설정
+        };
+
+        const favoriteRef = doc(db, 'favorites', `${user.uid}_${camp.contentId}`);
+        await setDoc(favoriteRef, favoriteData);
     } else {
         throw new Error('User not authenticated');
     }

@@ -314,12 +314,6 @@ function List({ campList, setCampList }) {
                                                 keyboard_arrow_down
                                             </span>
                                         </div>
-                                        <div className="swiper-slide filter_box_bt_select">
-                                            지역
-                                            <span className="material-symbols-rounded">
-                                                keyboard_arrow_down
-                                            </span>
-                                        </div>
                                         <div className="swiper-slide filter_box_bt_select" onClick={handleCampingEnvironmentClick}>
                                             {selectedCampingEnvironments.length > 0 ? selectedCampingEnvironments.join(', ') : '숙소 환경'}
                                             <span className="material-symbols-rounded">

@@ -141,6 +141,9 @@ import FavoriteList_here_bubble from "../assets/FavoriteList_here_bubble.png"
 export {FavoriteList_here_bubble}
 import FavoriteList_not from "../assets/FavoriteList_not.png"
 export {FavoriteList_not}
+import FavoriteList_delete_pop from "../assets/FavoriteList_delete_pop.png"
+export {FavoriteList_delete_pop}
+
 
 
 

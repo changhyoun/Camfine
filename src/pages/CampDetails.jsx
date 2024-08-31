@@ -89,7 +89,6 @@ const CampDetails = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const CampDetails_main = useRef(null);
-    
     const [camp, setCamp] = useState(null);
     const [weather, setWeather] = useState(null);
     const [temperature, setTemperature] = useState(null);
@@ -409,6 +408,7 @@ const CampDetails = () => {
 
     const temperatureStyle = temperature === "정보가\n없어요 😅" ? { fontSize: '0.9rem', whiteSpace: 'pre-wrap', textAlign: 'center' } : {}; 
     const humidityStyle = humidity === "" ? { display: 'none' } : {}; 
+    
 
     const renderFacilityIcon = (facility) => {
         switch(facility.trim()) {
@@ -632,9 +632,8 @@ const CampDetails = () => {
                                 )}
                             </div>
                         </div>
-                        {camp.mapX && camp.mapY && (
-                            <KakaoMap mapX={camp.mapX} mapY={camp.mapY} />
-                        )}
+                        {/* 카카오 맵 캠핑장 경도, 위도 표시 */}
+                        <KakaoMap mapX={camp.mapX} mapY={camp.mapY} />
                         <div className="CampDetails_main_near">
                             <div className="CampDetails_main_near_top">
                                 주변에 있는 캠핑장 ⛺ <span>ㆍ최대 2개까지 표시됩니다.</span>
