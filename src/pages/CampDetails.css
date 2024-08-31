@@ -158,6 +158,61 @@
                 background-color: #F8F8F8;
                 margin: 0 auto;
                 margin-top: 110px;
+                .liked-message {
+                    width: 100%;
+                    height: 60px;
+                    border-radius: 15px;
+                    background-color: #5092CF;
+                    margin-top: 20px;
+                    box-sizing: border-box;
+                    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    position: relative;
+                    opacity: 1; /* 기본값 */
+                    transition: opacity 0.3s ease, visibility 0.3s ease; /* 전환 설정 */
+                    visibility: visible;
+                
+                    &.closed{
+                        visibility: hidden;
+                        opacity: 0;
+                    }
+                    & > div{
+                        width: 80%;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        p{
+                            color: white;
+                            font-family: 'BinggraeSamanco';
+                            font-size: 1.2em;
+                            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+                        }
+                        & > img:nth-of-type(1),
+                        & > img:nth-of-type(2){
+                            width: 20%;
+                            height: 80%;
+                            object-fit: contain;
+                            filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.25));
+                        }
+
+                    }
+
+                    span{
+                        color: white;
+                        font-size: 1.2em;
+                        position: absolute;
+                        right: 2.5%;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        cursor: pointer;
+                       
+                    }
+                    
+                }
+                
                 .CampDetails_main_info{
                     height: 90px;
                     width: 100%;
@@ -559,6 +614,11 @@
                                 }
                                 
                             }
+                            .no-facility-group-inner{
+                                font-family: 'Binggrae';
+                                color: #5092CF;
+                                font-size: 1em;
+                            }
                             
                         }
                             .facility{
@@ -763,7 +823,7 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scaleX(-1);
+    transform: translate(-50%, -50%) scale(0.8);
     background: white;
     border: 1px solid #5092CF;
     border-radius: 8px;
@@ -771,21 +831,17 @@
     width: 70%;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
     text-align: center;
-    z-index: -1;
-    opacity: 0;
+    z-index: -5;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: opacity 0.5s ease, z-index 0.5s linear 0.5s;
+    transition: opacity 1s ease, transform 1s ease, visibility 1s 1s; /* visibility 전환에 딜레이 추가 */
 
-    &.popup_open{
-        z-index: 1000;
-        opacity: 1;
-        transition: all 0.5s ease;
-        transform: translate(-50%, -50%) scaleX(1);
-        
+    &.popup_open {
+        transform: translate(-50%, -50%) scale(1);
+        z-index: 1000; /* 팝업이 열릴 때 위로 올림 */
     }
-
+    
     & > div{
         width: 80%;
         height: 90%;
@@ -905,3 +961,5 @@
     text-align: center;
 
 }
+
+

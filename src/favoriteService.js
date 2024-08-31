@@ -17,6 +17,7 @@ export const addFavorite = async (camp) => {
             sbrsCl: camp.sbrsCl, // 추가
             doNm: camp.doNm, // 추가
             sigunguNm: camp.sigunguNm, // 추가
+            region : camp.region
         });
     } else {
         throw new Error('User not authenticated');

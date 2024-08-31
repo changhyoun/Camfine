@@ -30,6 +30,15 @@ export {main_se3_slide_arrow_lt}
 import main_se3_slide_arrow_rt from "../assets/main_se3_slide_arrow_rt.png"
 export {main_se3_slide_arrow_rt}
 
+// 메인 섹션 4 아이콘
+import main_se4_ic1 from "../assets/main_se4_ic1.png"
+export {main_se4_ic1}
+import main_se4_ic2 from "../assets/main_se4_ic2.png"
+export {main_se4_ic2}
+import main_se4_ic3 from "../assets/main_se4_ic3.png"
+export {main_se4_ic3}
+
+
 // 리스트 페이지 검색 결과 없음 이미지
 import no_list_caution from "../assets/no_list_caution.png"
 export {no_list_caution}
@@ -116,6 +125,11 @@ import CampDetails_list_plus from "../assets/CampDetails_list_plus.png"
 export {CampDetails_list_plus}
 import CampDetails_list_unplus from "../assets/CampDetails_list_unplus.png"
 export {CampDetails_list_unplus}
+import CampDetails_main_like1 from "../assets/CampDetails_main_like1.png"
+export {CampDetails_main_like1}
+import CampDetails_main_like2 from "../assets/CampDetails_main_like2.png"
+export {CampDetails_main_like2}
+
 
 
 // 찜한장소 관련

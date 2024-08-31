@@ -31,24 +31,31 @@ function List({ campList, setCampList }) {
     const [noResults, setNoResults] = useState(false);
     const [showCampingType, setShowCampingType] = useState(false);
     const [showCampingEnvironment, setShowCampingEnvironment] = useState(false);
-    const [showAroundEnvironment, setShowAroundEnvironment] = useState(false); // 주변 환경 필터 추가
+    const [showAroundEnvironment, setShowAroundEnvironment] = useState(false);
     const [selectedCampingTypes, setSelectedCampingTypes] = useState([]);
     const [selectedCampingEnvironments, setSelectedCampingEnvironments] = useState([]); 
-    const [selectedAroundEnvironments, setSelectedAroundEnvironments] = useState([]); // 주변 환경 필터 추가
+    const [selectedAroundEnvironments, setSelectedAroundEnvironments] = useState([]); 
     const observer = useRef();
     const location = useLocation();
     const [hoveredIndex, setHoveredIndex] = useState(null);
 
     const itemsPerPage = 10;
 
+    // 초기 로딩과 필터 설정
     useEffect(() => {
         if (location.state && location.state.selectedType) {
             const selectedType = location.state.selectedType;
-            setSelectedCampingTypes([selectedType]);
+            setSelectedCampingTypes([selectedType]); // Main.jsx에서 선택된 필터 적용
+        } else {
+            setSelectedCampingTypes([]); // 초기화
         }
+        setPageNo(1); // 페이지 번호 초기화
+    }, [location.state]);
 
-        fetchCampingData(pageNo, location.state?.selectedType);
-    }, [location.state, pageNo]);
+    // 데이터 로딩 시 필터 적용
+    useEffect(() => {
+        fetchCampingData(pageNo);
+    }, [pageNo, selectedCampingTypes, selectedCampingEnvironments, selectedAroundEnvironments]);
 
     useEffect(() => {
         new Swiper('.swiper-container3', {        
@@ -61,7 +68,7 @@ function List({ campList, setCampList }) {
         });
     }, []);
 
-    const fetchCampingData = async (page, filterType = null) => {
+    const fetchCampingData = async (page) => {
         setLoading(true);
         try {
             const response = await axios.get('http://apis.data.go.kr/B551011/GoCamping/basedList', {
@@ -82,15 +89,26 @@ function List({ campList, setCampList }) {
                 } else {
                     let uniqueCamps = [...new Map(newCamps.map(camp => [camp.contentId, camp])).values()];
                     
-                    if (filterType) {
+                    // 선택된 필터에 따라 캠핑장 필터링
+                    if (selectedCampingTypes.length > 0) {
                         uniqueCamps = uniqueCamps.filter(camp => 
-                            camp.induty && camp.induty.includes(campingTypeMapping[filterType])
+                            selectedCampingTypes.some(type => camp.induty && camp.induty.includes(campingTypeMapping[type]))
+                        );
+                    }
+                    if (selectedCampingEnvironments.length > 0) {
+                        uniqueCamps = uniqueCamps.filter(camp => 
+                            selectedCampingEnvironments.some(env => camp.sbrsCl && camp.sbrsCl.includes(env))
+                        );
+                    }
+                    if (selectedAroundEnvironments.length > 0) {
+                        uniqueCamps = uniqueCamps.filter(camp => 
+                            selectedAroundEnvironments.some(env => camp.posblFcltyCl && camp.posblFcltyCl.includes(env))
                         );
                     }
 
-                    setCampList(prevCampList => [...prevCampList, ...uniqueCamps]);
-                    setFilteredCampList(prevFiltered => [...prevFiltered, ...uniqueCamps]);
-                    setDisplayedCampList(prevDisplayed => [...prevDisplayed, ...uniqueCamps.slice(0, itemsPerPage)]);
+                    setCampList(prevCampList => page === 1 ? uniqueCamps : [...prevCampList, ...uniqueCamps]);
+                    setFilteredCampList(prevFiltered => page === 1 ? uniqueCamps : [...prevFiltered, ...uniqueCamps]);
+                    setDisplayedCampList(prevDisplayed => page === 1 ? uniqueCamps.slice(0, itemsPerPage) : [...prevDisplayed, ...uniqueCamps.slice(0, itemsPerPage)]);
                 }
             } else {
                 throw new Error('Unexpected API response structure');
@@ -176,10 +194,12 @@ function List({ campList, setCampList }) {
     };
 
     const handleCampingTypeSelect = (type) => {
-        setSelectedCampingTypes(prevSelectedTypes => {
-            const newSelectedTypes = prevSelectedTypes.includes(type) 
-                ? prevSelectedTypes.filter(t => t !== type)
+        setSelectedCampingTypes((prevSelectedTypes) => {
+            const isSelected = prevSelectedTypes.includes(type);
+            const newSelectedTypes = isSelected
+                ? prevSelectedTypes.filter((t) => t !== type)
                 : [...prevSelectedTypes, type];
+            setPageNo(1); // 새로운 필터 선택 시 페이지 번호 초기화
             return newSelectedTypes;
         });
     };
@@ -189,6 +209,7 @@ function List({ campList, setCampList }) {
             const newSelectedEnvironments = prevSelectedEnvironments.includes(type)
                 ? prevSelectedEnvironments.filter(t => t !== type)
                 : [...prevSelectedEnvironments, type];
+            setPageNo(1); // 새로운 필터 선택 시 페이지 번호 초기화
             return newSelectedEnvironments;
         });
     };
@@ -198,6 +219,7 @@ function List({ campList, setCampList }) {
             const newSelectedAroundEnvironments = prevSelectedAroundEnvironments.includes(type)
                 ? prevSelectedAroundEnvironments.filter(t => t !== type)
                 : [...prevSelectedAroundEnvironments, type];
+            setPageNo(1); // 새로운 필터 선택 시 페이지 번호 초기화
             return newSelectedAroundEnvironments;
         });
     };
@@ -220,7 +242,6 @@ function List({ campList, setCampList }) {
     const applyFilters = () => {
         let filteredList = campList;
 
-        // 숙소 유형 필터 적용
         if (selectedCampingTypes.length > 0) {
             filteredList = filteredList.filter(camp => {
                 const includesSelectedTypes = selectedCampingTypes.some(type => 
@@ -232,7 +253,6 @@ function List({ campList, setCampList }) {
             });
         }
 
-        // 숙소 환경 필터 적용
         if (selectedCampingEnvironments.length > 0) {
             filteredList = filteredList.filter(camp => {
                 const includesSelectedEnvironments = selectedCampingEnvironments.some(env => 
@@ -242,7 +262,6 @@ function List({ campList, setCampList }) {
             });
         }
         
-        // 주변 환경 필터 적용
         if (selectedAroundEnvironments.length > 0) {
             filteredList = filteredList.filter(camp => {
                 const includesSelectedAroundEnvironments = selectedAroundEnvironments.some(env => 
@@ -252,7 +271,6 @@ function List({ campList, setCampList }) {
             });
         }
 
-        // 필터링된 목록을 상태에 저장
         setFilteredCampList(filteredList);
         setDisplayedCampList(filteredList.slice(0, itemsPerPage));
         setSearchPageNo(1);

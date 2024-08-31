@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import axios from 'axios';
-import { weather_1, weather_2, weather_3, weather_4, weather_5, weather_6, weather_7, weather_not, facebookLogo, xLogo, kakaoLogo, logoWhite, location_icon, CampDetails_main_pet_pass_lt, CampDetails_main_pet_pass_rt, CampDetails_main_pet_not_lt, CampDetails_main_pet_not_rt, SearchList_main_statistics_lt_back, CampDetails_main_share } from '../components/Images'; 
+import { weather_1, weather_2, weather_3, weather_4, weather_5, weather_6, weather_7, weather_not, facebookLogo, xLogo, kakaoLogo, logoWhite, location_icon, CampDetails_main_pet_pass_lt, CampDetails_main_pet_pass_rt, CampDetails_main_pet_not_lt, CampDetails_main_pet_not_rt, SearchList_main_statistics_lt_back, CampDetails_main_share, CampDetails_main_like1, CampDetails_main_like2 } from '../components/Images'; 
 import './CampDetails.css';
 import DetailFooter from '../components/DetailFooter';
 import { faMagnifyingGlassLocation, faCampground, faUpRightAndDownLeftFromCenter, faBolt, faWifi, faFire, faShower, faGamepad, faBasketballBall, faDumbbell, faWater, faPersonWalking, faStreetView, faStore, faShareFromSquare } from '@fortawesome/free-solid-svg-icons';
@@ -105,6 +105,31 @@ const CampDetails = () => {
     const swiperRef = useRef(null);
     const [isActive2, setIsActive2] = useState(false);
     const [nearbyCamps, setNearbyCamps] = useState([]);
+    const likedMessageRef = useRef(null); // liked-message 요소 참조
+    const [isLiked, setIsLiked] = useState(false); // 좋아요 상태 추가
+    const [isClosed, setIsClosed] = useState(false); // 좋아요 메시지 닫힘 상태 초기화
+    
+
+    // DetailFooter로부터 좋아요 상태 업데이트를 받는 함수
+    const handleLikeStatusChange = (likedStatus) => {
+        setIsLiked(likedStatus);
+        if (likedStatus) {
+            setIsClosed(false); // 좋아요가 true일 때 메시지를 열어둠
+        }
+    };
+
+    // 좋아요 메시지 닫기 함수
+    const handleCloseLikedMessage = () => {
+        if (likedMessageRef.current) {
+          likedMessageRef.current.classList.add('closed'); // 'closed' 클래스 추가
+        }
+      };
+
+      const handleTransitionEnd = () => {
+        if (likedMessageRef.current.classList.contains('closed')) {
+            likedMessageRef.current.style.display = 'none'; // 애니메이션 끝난 후 display: none
+        }
+    };
 
     // 캠핑장 정보 로드
     const fetchCampDetails = async (campId) => {
@@ -428,7 +453,33 @@ const CampDetails = () => {
                         </div>
                     </div>
 
+                    
                     <div className="CampDetails_main_warp_inbox">
+                    {isLiked && (
+                       <div
+                         className={`liked-message`} // 상태에 따라 클래스 추가
+                         ref={likedMessageRef} // 요소 참조
+                         onTransitionEnd={handleTransitionEnd} 
+                       >
+                         <div className="liked-message_inner">
+                           <img
+                             src={CampDetails_main_like1}
+                             alt="CampDetails_main_like1"
+                           />
+                           <p>좋아요한 캠핑장이네요!</p>
+                           <img
+                             src={CampDetails_main_like2}
+                             alt="CampDetails_main_like2"
+                           />
+                         </div>
+                         <span
+                           className="material-symbols-rounded cl"
+                           onClick={handleCloseLikedMessage} // 클릭 시 클래스 추가
+                         >
+                           close
+                         </span>
+                       </div>
+                     )}
                         <div className="CampDetails_main_info">
                             <div className="CampDetails_main_info_warp">
                                 <h3>{camp.facltNm}</h3>
@@ -440,7 +491,7 @@ const CampDetails = () => {
                                     <div 
                                         className="CampDetails_main_info_box_rt"
                                     >
-                                    <span className="material-symbols-rounded">
+                                    <span className="material-symbols-rounded"  onClick={handleCloseLikedMessage}>
                                         content_copy
                                     </span>
                                     </div>
@@ -459,7 +510,7 @@ const CampDetails = () => {
                                 <span className="material-symbols-rounded weather-icon">
                                     {shotWeatherIcon}
                                 </span>
-                                <h4>{region}</h4>
+                                <h4>{region && region !== 'undefined undefined' ? region : '지역 확인이 안되요!'}</h4>
                                 <p style={temperatureStyle}>
                                 {temperature !== "정보가\n없어요 😅" ? `${temperature}℃` : temperature}</p>
                             </div>
@@ -471,7 +522,7 @@ const CampDetails = () => {
                                 <div className="CampDetails_main_weather_rt">
                                     <div className="CampDetails_main_weather_rt_box">
                                         <div className="SCampDetails_main_weather_rt_box_top">
-                                            {region}
+                                            {region && region !== 'undefined undefined' ? region : '지역 확인이 안되요!'}
                                         </div>
                                         <div className="CampDetails_main_weather_rt_box_bottom">
                                             <div className="CampDetails_main_weather_rt_box_bottom_lt">
@@ -536,20 +587,34 @@ const CampDetails = () => {
                                     }}
                                     modules={[Navigation]}
                                 >
-                                    {groupedFacilities.map((facilityGroup, index) => (
-                                        <SwiperSlide key={index} className="facility-group">
-                                            <div className="facility-group-inner">
-                                                {facilityGroup.map((facility, subIndex) => (
-                                                    <div key={subIndex} className="facility">
-                                                        <div className="icon_box">
-                                                            {renderFacilityIcon(facility)}
-                                                        </div>
-                                                        <p>{facility.trim()}</p>
+                                    {groupedFacilities.length > 0 ? (
+                                        groupedFacilities.map((facilityGroup, index) => (
+                                            <SwiperSlide key={index} className="facility-group">
+                                                {facilityGroup.length > 0 ? (
+                                                    <div className="facility-group-inner">
+                                                        {facilityGroup.map((facility, subIndex) => (
+                                                            <div key={subIndex} className="facility">
+                                                                <div className="icon_box">
+                                                                    {renderFacilityIcon(facility)}
+                                                                </div>
+                                                                <p>{facility.trim()}</p>
+                                                            </div>
+                                                        ))}
                                                     </div>
-                                                ))}
+                                                ) : (
+                                                    <div className="no-facility-group-inner">
+                                                        <p>요소가 없습니다.</p>
+                                                    </div>
+                                                )}
+                                            </SwiperSlide>
+                                        ))
+                                    ) : (
+                                        <SwiperSlide className="facility-group">
+                                            <div className="no-facility-group-inner">
+                                                <p>표시되는 시설,환경이 없는거 같네요.</p>
                                             </div>
                                         </SwiperSlide>
-                                    ))}
+                                    )}
                                 </Swiper>
                                 {groupedFacilities.length > 1 && (
                                     <>
@@ -606,7 +671,7 @@ const CampDetails = () => {
                     </div>
                 </div>
             </div>
-            <DetailFooter />
+            <DetailFooter onLikeStatusChange={handleLikeStatusChange} />
             {isSharePopupOpen && (
                 <div className="share-popup popup_open">
                     <div className="share-popup-inner">

@@ -5,7 +5,7 @@ import { go_browser_icon, CampDetails_list_plus, CampDetails_list_unplus } from 
 import { addFavorite, removeFavorite, isFavorite } from '../favoriteService';
 import { auth } from '../firebase';
 
-function DetailFooter() {
+function DetailFooter({ onLikeStatusChange }) {
     const navigate = useNavigate();
     const { id } = useParams();
     const location = useLocation();
@@ -28,12 +28,13 @@ function DetailFooter() {
         const checkFavoriteStatus = async () => {
             if (camp && auth.currentUser) {
                 const favoriteStatus = await isFavorite(camp.contentId);
-                console.log("Favorite status:", favoriteStatus); // 디버깅용 로그 추가
+                console.log("Favorite status:", favoriteStatus);
                 setIsLiked(favoriteStatus);
+                onLikeStatusChange(favoriteStatus); // 좋아요 상태 변경 시 호출
             }
         };
         checkFavoriteStatus();
-    }, [camp, auth.currentUser]);
+    }, [camp, auth.currentUser, onLikeStatusChange]);
 
     const handleLoveClick = async () => {
         if (camp && auth.currentUser) {
@@ -43,6 +44,7 @@ function DetailFooter() {
                     try {
                         await removeFavorite(camp.contentId);
                         setIsLiked(false);
+                        onLikeStatusChange(false); // 좋아요 상태 변경 시 호출
                         alert('좋아요가 취소되었습니다.');
                     } catch (error) {
                         console.error('좋아요 취소 중 오류:', error);
@@ -53,6 +55,7 @@ function DetailFooter() {
                 try {
                     await addFavorite(camp);
                     setIsLiked(true);
+                    onLikeStatusChange(true); // 좋아요 상태 변경 시 호출
                     alert('찜한 장소에 추가되었습니다.');
                 } catch (error) {
                     console.error('찜한 장소 추가 중 오류:', error);
@@ -83,13 +86,12 @@ function DetailFooter() {
                     )}
                 </button>
                 <button 
-                    className={`love ${isLiked ? 'liked' : ''}`}  // 좋아요 상태에 따라 클래스 추가
+                    className={`love ${isLiked ? 'liked' : ''}`}  
                     onClick={handleLoveClick}
                 >
                     {isLiked ?
                         <img src={CampDetails_list_unplus} alt="CampDetails_list_unplus" /> :
                          <img src={CampDetails_list_plus} alt="CampDetails_list_plus" />
-                        
                     }
                 </button>
             </div>
