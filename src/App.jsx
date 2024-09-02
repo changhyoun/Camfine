@@ -1,5 +1,5 @@
 import React, { useState, Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import Loading from './components/Loading';
 import './App.css';
 import './components/Responsive.css';
@@ -15,7 +15,7 @@ const FavoriteList = lazy(() => import('./pages/FavoriteList'));
 const Not_Found = lazy(() => import('./pages/Not_Found'));
 
 function App() {
-    const BASE_URL = import.meta.env.BASE_URL;
+
     const [campList, setCampList] = useState([]);
 
     // 카카오톡 SDK 초기화
@@ -24,7 +24,7 @@ function App() {
     }
 
     return (
-        <Router basename={BASE_URL}>
+        <Router>
             <div className="App">
                 {/* Suspense로 Lazy 로딩된 컴포넌트들을 감싸서 로딩 중 로딩 컴포넌트를 표시 */}
                 <Suspense fallback={<Loading />}>
