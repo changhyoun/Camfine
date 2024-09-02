@@ -129,7 +129,7 @@ function Main() {
 
   const fetchCampingSites = async (attempts = 3) => {
     try {
-      const response = await axios.get('http://apis.data.go.kr/B551011/GoCamping/locationBasedList', {
+      const response = await axios.get('https://apis.data.go.kr/B551011/GoCamping/locationBasedList', {
         params: {
           ServiceKey: CAMPING_API_KEY,
           mapX: userLocation.lng,

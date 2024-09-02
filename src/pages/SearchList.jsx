@@ -51,7 +51,7 @@ function SearchList() {
 
         try {
             while (moreData) {
-                const response = await axios.get('http://apis.data.go.kr/B551011/GoCamping/basedList', {
+                const response = await axios.get('https://apis.data.go.kr/B551011/GoCamping/basedList', {
                     params: {
                         ServiceKey: CAMPING_API_KEY,
                         MobileOS: 'ETC',
