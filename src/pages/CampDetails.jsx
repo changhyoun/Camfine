@@ -108,6 +108,15 @@ const CampDetails = () => {
     const likedMessageRef = useRef(null); // liked-message 요소 참조
     const [isLiked, setIsLiked] = useState(false); // 좋아요 상태 추가
     const [isClosed, setIsClosed] = useState(false); // 좋아요 메시지 닫힘 상태 초기화
+
+    useEffect(() => {
+        const hasReloaded = localStorage.getItem('hasReloaded');
+
+        if (!hasReloaded) {
+            localStorage.setItem('hasReloaded', 'true');
+            window.location.reload(); // 페이지를 새로고침
+        }
+    }, []);
     
 
     // DetailFooter로부터 좋아요 상태 업데이트를 받는 함수

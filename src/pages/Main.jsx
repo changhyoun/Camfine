@@ -402,8 +402,13 @@ function Main() {
             <div className="main_se3_tx">내 근처에 있는 ⛺</div>
             <div className="main_se3_box">
               <div className="main_se3_box_inner">
-                {noCampingSitesMessage ? (
-                  <div className="no-camping-sites-message">{noCampingSitesMessage}</div>
+                {noCampingSitesMessage || nearbyCampingSites.length === 0 ? (
+                 <div
+                 className="no-camping-sites-message"
+                 dangerouslySetInnerHTML={{
+                   __html: noCampingSitesMessage || "근처에 캠핑장이 없거나,<br>위치 정보를 허용해주세요.",
+                 }}
+               />
                 ) : (
                   <div className="swiper-container2">
                     <div className="swiper-wrapper">
@@ -424,7 +429,10 @@ function Main() {
                     </div>
                   </div>
                 )}
-                <div className="main_se3_box_arrow_warp">
+                 <div
+                   className="main_se3_box_arrow_warp"
+                   style={{ display: noCampingSitesMessage || nearbyCampingSites.length === 0 ? 'none' : '' }}
+                 >
                   <div className="swiper-button-prev2 prev2">
                     <img src={main_se3_slide_arrow_lt} alt="previous" />
                   </div>
@@ -491,7 +499,7 @@ function Main() {
                   </div>
                 ))
               ) : (
-                <p>해당 유형의 캠핑장이 없습니다.</p>
+                <p>해당 유형의 캠핑장이 없거나,<br/>위치정보 허용을 해주세요.</p>
               )}
             </div>
           </div>
