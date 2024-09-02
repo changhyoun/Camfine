@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script type="text/javascript">
+      // 현재 경로를 가져와서 새로고침 시 해당 경로로 이동
+      var redirectTo = window.location.pathname;
+      if (redirectTo) {
+        // 경로가 존재하는 경우, 루트 경로에 해당 경로를 추가하여 리디렉션
+        window.location.replace("/Camfine" + redirectTo);
+      } else {
+        // 경로가 없으면 루트 경로로 리디렉션
+        window.location.replace("/Camfine");
+      }
+    </script>
+  </head>
+  <body></body>
+</html>
