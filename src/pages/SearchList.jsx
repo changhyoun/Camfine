@@ -88,7 +88,7 @@ function SearchList() {
                 setNoResults(uniqueCamps.length === 0);
             }
         } catch (error) {
-            console.error('데이터 가져오기 오류:', error.response ? error.response.data : error.message);
+    
         } finally {
             setLoading(false);
         }
@@ -96,9 +96,9 @@ function SearchList() {
 
     useEffect(() => {
         if (loading) {
-            console.log('로딩 중입니다...');
+   
         } else {
-            console.log('로딩 완료입니다...');
+  
         }
     }, [loading]);
 

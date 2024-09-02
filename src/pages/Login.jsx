@@ -34,7 +34,7 @@ function Login() {
             await signInWithEmailAndPassword(auth, fullEmail, password);
             navigate('/'); 
         } catch (error) {
-            console.error('로그인 오류:', error.message);
+      
             setShowError(true); 
         }
     };

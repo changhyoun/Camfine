@@ -64,7 +64,6 @@ function SignUp() {
                 setEmailError('');
             }
         } catch (error) {
-            console.error('Firestore 이메일 확인 중 오류:', error.message);
             setEmailError('이메일 확인 중 오류가 발생했습니다.');
         }
     };
@@ -91,7 +90,6 @@ function SignUp() {
                 valid = false;
             }
         } catch (error) {
-            console.error('Firestore 이메일 확인 중 오류:', error.message);
             setEmailError('이메일 확인 중 오류가 발생했습니다.');
             showErrorMessage('.email .same_mail');
             valid = false;
@@ -153,7 +151,6 @@ function SignUp() {
             setVideoKey(prevKey => prevKey + 1);
             setSignupSuccess(true);
         } catch (error) {
-            console.error('Error creating user:', error.message);
             alert('회원가입 중 오류가 발생했습니다. 다시 시도해주세요.');
         }
     };

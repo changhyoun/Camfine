@@ -88,15 +88,14 @@ function Main() {
             navigator.geolocation.getCurrentPosition(
               (position) => {
                 const { latitude, longitude } = position.coords;
-                console.log(`현재 위치 - 위도: ${latitude}, 경도: ${longitude}`);
                 setUserLocation({ lat: latitude, lng: longitude });
               },
               (error) => {
-                console.error('Error getting user location:', error);
+  
               }
             );
           } else {
-            console.error('Geolocation is not supported by this browser.');
+
           }
         };
         document.head.appendChild(script);
@@ -105,15 +104,14 @@ function Main() {
           navigator.geolocation.getCurrentPosition(
             (position) => {
               const { latitude, longitude } = position.coords;
-              console.log(`현재 위치 - 위도: ${latitude}, 경도: ${longitude}`);
               setUserLocation({ lat: latitude, lng: longitude });
             },
             (error) => {
-              console.error('Error getting user location:', error);
+
             }
           );
         } else {
-          console.error('Geolocation is not supported by this browser.');
+
         }
       }
     };
@@ -141,7 +139,6 @@ function Main() {
         },
       });
 
-      console.log('API 응답 데이터:', response.data);
 
       const items = response.data?.response?.body?.items?.item;
       if (items) {
@@ -155,7 +152,7 @@ function Main() {
               parseFloat(item.mapY),
               parseFloat(item.mapX)
             );
-            console.log(`캠핑장: ${item.facltNm}, 거리: ${distance.toFixed(2)} km`);
+
             return { ...item, distance };
           })
           .sort((a, b) => a.distance - b.distance);
@@ -163,13 +160,10 @@ function Main() {
         setNearbyCampingSites(itemsWithDistance);
         setNoCampingSitesMessage('');
       } else {
-        console.error('No items found in the response');
         setNoCampingSitesMessage('50km 안에 캠핑장이 없습니다.');
       }
     } catch (error) {
-      console.error('캠핑장 데이터를 가져오는 중 오류 발생:', error);
       if (attempts > 1) {
-        console.log(`재시도 중... 남은 시도 횟수: ${attempts - 1}`);
         fetchCampingSites(attempts - 1);
       } else {
         setNoCampingSitesMessage('캠핑장 데이터를 가져오는 중 오류가 발생했습니다.');

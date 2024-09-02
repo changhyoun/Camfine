@@ -39,7 +39,7 @@ function FavoriteList() {
                     const favList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                     setFavorites(favList);
                 } catch (error) {
-                    console.error('찜 목록을 불러오는 중 오류가 발생했습니다:', error.message);
+        
                 } finally {
                     setLoading(false);
                 }
@@ -55,7 +55,7 @@ function FavoriteList() {
             setFavorites(favorites.filter(fav => fav.id !== selectedFavoriteId));
             setShowDeletePopup(false); // 팝업 닫기
         } catch (error) {
-            console.error('찜 삭제 오류:', error.message);
+
         }
     };
 

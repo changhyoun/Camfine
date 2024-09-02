@@ -114,7 +114,7 @@ function List({ campList, setCampList }) {
                 throw new Error('Unexpected API response structure');
             }
         } catch (error) {
-            console.error('데이터 가져오기 오류:', error.response ? error.response.data : error.message);
+      
         } finally {
             setLoading(false);
         }

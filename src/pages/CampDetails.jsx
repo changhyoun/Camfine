@@ -110,7 +110,7 @@ const CampDetails = () => {
     const [isClosed, setIsClosed] = useState(false); // 좋아요 메시지 닫힘 상태 초기화
 
     useEffect(() => {
-        const hasReloaded = localStorage.getItem('hasReloaded');
+        const hasReloaded = sessionStorage.getItem('hasReloaded');
 
         if (!hasReloaded) {
             sessionStorage.setItem('hasReloaded', 'true');
@@ -159,15 +159,11 @@ const CampDetails = () => {
                 setCamp(null);
             }
         } catch (error) {
-            console.error('캠핑장 데이터를 가져오는 중 오류가 발생했습니다.', error);
             setCamp(null);
         }
     };
 
     useEffect(() => {
-        console.log("Received camp from state:", location.state?.camp);
-        console.log("Received camp from state:", location.state?.camp);
-        console.log("Received campList from state:", location.state?.campList);
         if (location.state?.camp) {
             setCamp(location.state.camp);
         } else if (location.state?.campList) {
@@ -198,7 +194,6 @@ const CampDetails = () => {
                     const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(cityName)},KR&appid=${apiKey}&units=metric&lang=kr`;
 
                     const response = await axios.get(url);
-                    console.log("Weather data response:", response.data);
                     const weatherData = response.data.weather[0].description;
                     const temperatureData = Math.round(response.data.main.temp);
                     const humidityData = response.data.main.humidity;
@@ -216,7 +211,6 @@ const CampDetails = () => {
                     setYear(`${date.getFullYear()}년`);
                     setDayOfWeek(`${['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'][date.getDay()]}`);
                 } catch (error) {
-                    console.error('날씨 데이터를 가져오는 중 오류가 발생했습니다.', error);
                     setWeather(null);
                     setTemperature("정보가\n없어요 😅");
                     setHumidity("");
@@ -262,16 +256,13 @@ const CampDetails = () => {
                         sortedCamps.sort((a, b) => (a.distance || Infinity) - (b.distance || Infinity));
                         setNearbyCamps(sortedCamps.slice(1, 3)); // 가장 가까운 2개 선택
                     } else {
-                        console.error('주변 캠핑장 데이터를 찾을 수 없습니다.');
                         setNearbyCamps([]);
                     }
                 } catch (error) {
-                    console.error('주변 캠핑장 데이터를 가져오는 중 오류가 발생했습니다.', error);
                     setNearbyCamps([]);
                 }
             }
         };
-        console.log("Camp location:", camp?.mapX, camp?.mapY);
         if (camp) {
             fetchWeatherData();
             fetchNearbyCamps();
@@ -291,11 +282,9 @@ const CampDetails = () => {
                 const distance = response.data.routes[0]?.summary?.distance / 1000; // meter to km
                 return distance;
             } else {
-                console.error('No routes found in the response');
                 return null;
             }
         } catch (error) {
-            console.error('카카오 네비 경로를 가져오는 중 오류가 발생했습니다.', error);
             return null;
         }
     };
@@ -303,7 +292,6 @@ const CampDetails = () => {
     // 카카오 네비로 길찾기를 실행하는 함수
     const handleNaviClick = (destinationLat, destinationLon, destinationAddr) => {
         if (!camp || !camp.mapY || !camp.mapX) {
-            console.error('캠핑장 좌표가 없습니다.');
             return;
         }
     
@@ -376,7 +364,6 @@ const CampDetails = () => {
                 ],
             });
         } else {
-            console.error('카카오톡 SDK가 초기화되지 않았습니다.');
         }
     };
 
