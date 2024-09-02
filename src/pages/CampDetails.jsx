@@ -113,7 +113,7 @@ const CampDetails = () => {
         const hasReloaded = localStorage.getItem('hasReloaded');
 
         if (!hasReloaded) {
-            localStorage.setItem('hasReloaded', 'true');
+            sessionStorage.setItem('hasReloaded', 'true');
             window.location.reload(); // 페이지를 새로고침
         }
     }, []);
