@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import axios from 'axios';
-import { weather_1, weather_2, weather_3, weather_4, weather_5, weather_6, weather_7, weather_not, facebookLogo, xLogo, kakaoLogo, logoWhite, location_icon, CampDetails_main_pet_pass_lt, CampDetails_main_pet_pass_rt, CampDetails_main_pet_not_lt, CampDetails_main_pet_not_rt, SearchList_main_statistics_lt_back, CampDetails_main_share, CampDetails_main_like1, CampDetails_main_like2 } from '../components/Images'; 
+import { weather_1, weather_2, weather_3, weather_4, weather_5, weather_6, weather_7, weather_not, facebookLogo, xLogo, kakaoLogo, logoWhite, location_icon, CampDetails_main_pet_pass_lt, CampDetails_main_pet_pass_rt, CampDetails_main_pet_not_lt, CampDetails_main_pet_not_rt, SearchList_main_statistics_lt_back, CampDetails_main_share, CampDetails_main_like1, CampDetails_main_like2,CampDetails_loading } from '../components/Images'; 
 import './CampDetails.css';
 import DetailFooter from '../components/DetailFooter';
 import { faMagnifyingGlassLocation, faCampground, faUpRightAndDownLeftFromCenter, faInfo, faBolt, faWifi, faFire, faShower, faGamepad, faBasketballBall, faDumbbell, faWater, faPersonWalking, faStreetView, faStore, faShareFromSquare } from '@fortawesome/free-solid-svg-icons';
@@ -108,6 +108,7 @@ const CampDetails = () => {
     const likedMessageRef = useRef(null); // liked-message 요소 참조
     const [isLiked, setIsLiked] = useState(false); // 좋아요 상태 추가
     const [isClosed, setIsClosed] = useState(false); // 좋아요 메시지 닫힘 상태 초기화
+    const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
 
     useEffect(() => {
         const hasReloaded = sessionStorage.getItem('hasReloaded');
@@ -187,6 +188,7 @@ const CampDetails = () => {
     // 날씨 데이터 로드
     useEffect(() => {
         const fetchWeatherData = async () => {
+            setIsLoading(true); // 로딩 상태를 true로 설정
             if (camp) {
                 try {
                     const cityName = camp.sigunguNm;
@@ -217,6 +219,8 @@ const CampDetails = () => {
                     setBackgroundImage(`url(${errorImageUrl})`);
                     setWeatherIcon(weather_not);
                     setShotWeatherIcon('help_outline');
+                } finally {
+                    setIsLoading(false); // 로딩 상태를 false로 설정
                 }
             }
         };
@@ -442,7 +446,7 @@ const CampDetails = () => {
         <div id='CampDetails'>
             <Header logo={logoWhite} />
             <div className={`CampDetails_main ${isSharePopupOpen ? 'popup_on' : ''}`}  ref={CampDetails_main}>
-                <div className="CampDetails_main_warp">
+                <div className="CampDetails_main_warp">      
                     <div className="CampDetails_main_img_box">
                         <div className={`CampDetails_main_img ${!hasImage ? 'no-image' : ''}`}>
                             {!hasImage && <p>임시 이미지입니다.</p>}
@@ -503,40 +507,52 @@ const CampDetails = () => {
                             <span className="material-symbols-rounded" onClick={toggleActiveState}>
                                 {isActive ? 'add' : 'remove'}
                             </span>
-                            <div className="CampDetails_main_weather_shot">
-                                <span className="material-symbols-rounded weather-icon">
-                                    {shotWeatherIcon}
-                                </span>
-                                <h4>{region && region !== 'undefined undefined' ? region : '지역 확인이 안되요!'}</h4>
-                                <p style={temperatureStyle}>
-                                {temperature !== "정보가\n없어요 😅" ? `${temperature}℃` : temperature}</p>
-                            </div>
-                            <div className="CampDetails_main_weather_inner" style={{ display: isActive}}>
-                                <div className="CampDetails_main_weather_lt">
-                                    <h2 className="formatted-date">{formattedDate}</h2>
-                                    <p className="formatted-year-day">{year} | {dayOfWeek}</p>
-                                </div>
-                                <div className="CampDetails_main_weather_rt">
-                                    <div className="CampDetails_main_weather_rt_box">
-                                        <div className="SCampDetails_main_weather_rt_box_top">
-                                            {region && region !== 'undefined undefined' ? region : '지역 확인이 안되요!'}
-                                        </div>
-                                        <div className="CampDetails_main_weather_rt_box_bottom">
-                                            <div className="CampDetails_main_weather_rt_box_bottom_lt">
-                                                <h3 style={temperatureStyle}>
-                                                    {temperature !== "정보가\n없어요 😅" ? `${temperature}℃` : temperature}
-                                                </h3>
 
-                                                <p style={humidityStyle}>습도 : {humidity}%</p>
-                                                <p>{weather}</p>
-                                            </div>
-                                            <div className="CampDetails_main_weather_rt_box_bottom_rt">
-                                                <img src={weatherIcon} alt="Weather Icon" />
+                            {/* 로딩 중일 때 로딩 메시지 표시 */}
+                            {isLoading ? (
+                             <div className="loading-message">
+                                <img src={CampDetails_loading} alt="CampDetails_loading" />
+                                <p>로딩중이예요 기달려주세요 !</p>
+                             </div>
+                            ) : (
+                                <>
+                                    <div className="CampDetails_main_weather_shot">
+                                        <span className="material-symbols-rounded weather-icon">
+                                            {shotWeatherIcon}
+                                        </span>
+                                        <h4>{region && region !== 'undefined undefined' ? region : '지역 확인이 안되요!'}</h4>
+                                        <p style={temperatureStyle}>
+                                            {temperature !== "정보가\n없어요 😅" ? `${temperature}℃` : temperature}
+                                        </p>
+                                    </div>
+                                    <div className="CampDetails_main_weather_inner" style={{ display: isActive }}>
+                                        <div className="CampDetails_main_weather_lt">
+                                            <h2 className="formatted-date">{formattedDate}</h2>
+                                            <p className="formatted-year-day">{year} | {dayOfWeek}</p>
+                                        </div>
+                                        <div className="CampDetails_main_weather_rt">
+                                            <div className="CampDetails_main_weather_rt_box">
+                                                <div className="SCampDetails_main_weather_rt_box_top">
+                                                    {region && region !== 'undefined undefined' ? region : '지역 확인이 안되요!'}
+                                                </div>
+                                                <div className="CampDetails_main_weather_rt_box_bottom">
+                                                    <div className="CampDetails_main_weather_rt_box_bottom_lt">
+                                                        <h3 style={temperatureStyle}>
+                                                            {temperature !== "정보가\n없어요 😅" ? `${temperature}℃` : temperature}
+                                                        </h3>
+                                                        <p style={humidityStyle}>습도 : {humidity}%</p>
+                                                        <p>{weather}</p>
+                                                    </div>
+                                                    <div className="CampDetails_main_weather_rt_box_bottom_rt">
+                                                        <img src={weatherIcon} alt="Weather Icon" />
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>                            
+                                </>
+                            )}
+                                          
                         </div>
                         <div className="CampDetails_main_pet">
                             {camp.animalCmgCl === "가능" ? (

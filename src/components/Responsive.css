@@ -366,6 +366,7 @@
         width: 100% !important;
         height: 100% !important;
       }
+      
 }
 
 @media screen and (max-width: 400px) and (orientation: portrait) {

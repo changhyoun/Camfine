@@ -81,7 +81,7 @@
 
             & > div{
                 display: flex;
-                width: 100%;
+                width: 95%;
                 height: auto;
                 flex-direction: column;
                 margin-top: 5%;
@@ -147,7 +147,7 @@
 
         }  
         .signup_btn{
-            width: 100%;
+            width: 95%;
             background-color: #5092CF;
             color: #f5f5f5;
             height: 60px;

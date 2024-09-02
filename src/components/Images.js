@@ -90,6 +90,11 @@ export {weather_not}
 import go_browser_icon from "../assets/go_browser_icon.png"
 export {go_browser_icon}
 
+// 상세페이지 로딩 이미지
+import CampDetails_loading from "../assets/CampDetails_loading.png"
+export {CampDetails_loading}
+
+
 // sns 로고
 import kakaoLogo from "../assets/kakaoLogo.png"
 export {kakaoLogo}
