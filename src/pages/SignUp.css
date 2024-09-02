@@ -1,3 +1,4 @@
+/* signup page */
 #SignUp{
     width: 100%;
     height: 100%;
@@ -143,8 +144,6 @@
                 height: 20px;
                 color: #3D2F18;
             }      
-       
-          
 
         }  
         .signup_btn{
@@ -161,7 +160,6 @@
             box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
          }
         }
-        
     }
 
     .signup_suc{
@@ -218,7 +216,6 @@
                 -webkit-mask-image: -webkit-radial-gradient(white, black);
                 -webkit-backface-visibility: hidden;
                 -moz-backface-visibility: hidden;
-
             }
             h3{
                 font-weight: 400;
@@ -235,6 +232,4 @@
             }
         }
     }
-    
-
 }

@@ -1,3 +1,5 @@
+// filter page
+
 import React, { useEffect, useState, useRef } from 'react';
 import './List.css';
 import Header from '../components/Header';
@@ -13,7 +15,6 @@ import AroundEnvironmentFilter from '../components/AroundEnvironmentFilter';
 
 const CAMPING_API_KEY = process.env.REACT_APP_CAMPING_API_KEY;
 const defaultImageUrl = 'https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
-
 const campingTypeMapping = {
     '오토캠핑': '야영장',
     '글램핑': '글램핑',
@@ -38,7 +39,6 @@ function List({ campList, setCampList }) {
     const observer = useRef();
     const location = useLocation();
     const [hoveredIndex, setHoveredIndex] = useState(null);
-
     const itemsPerPage = 10;
 
     // 초기 로딩과 필터 설정
@@ -151,31 +151,6 @@ function List({ campList, setCampList }) {
             }
         };
     }, [displayedCampList, loading, hasMore]);
-
-    const handleSearch = (e) => {
-        e.preventDefault();
-        const petFriendlyKeywords = ['애견', '애견 동반', '애견동반', '애견 동', '동반'];
-        const isPetFriendlySearch = petFriendlyKeywords.some(keyword => searchTerm.includes(keyword));
-
-        const filteredList = campList.filter(camp => {
-            const fieldsToSearch = [
-                'facltNm', 'addr1', 'addr2', 'intro', 'featureNm', 
-                'doNm', 'sbrsCl', 'lineIntro', 'homepage', 'operDeCl', 
-                'operPdCl', 'posblFcltyCl', 'posblFcltyEtc', 'facltDivNm', 'induty', 
-                'lctCl', 'sigunguNm', 'themaEnvrnCl'
-            ];
-            const matchesSearchTerm = fieldsToSearch.some(field => camp[field] && camp[field].includes(searchTerm));
-            if (isPetFriendlySearch) {
-                return matchesSearchTerm && camp.animalCmgCl === '가능';
-            }
-            return matchesSearchTerm;
-        });
-
-        setFilteredCampList(filteredList);
-        setDisplayedCampList(filteredList.slice(0, itemsPerPage));
-        setSearchPageNo(1);
-        setNoResults(filteredList.length === 0);
-    };
 
     const reloadPage = () => {
         window.location.href = '/list';
@@ -333,95 +308,94 @@ function List({ campList, setCampList }) {
                     </div>
                     <div className="camp_list">
                     <div className="camp_list_warp">
-    {noResults ? (
-        <div className="no_results">
-            <div className="no_results_img_warp">
-                <img src={no_list_man} alt="검색 결과 없음 이미지" />
-                <img src={no_list_caution} alt="주의 이미지" />
-            </div>
-            <h3>검색결과가 없어요</h3>
-            <button onClick={reloadPage} className="retry_button">
-                다시 찾아보기
-            </button>
-        </div>
-    ) : (
-        displayedCampList.map((camp, index) => {
-            const isDefaultImage = camp.firstImageUrl === "" || camp.firstImageUrl === null;
-            return (
-                <Link
-                    to={{
-                        pathname: `/camp/${camp.contentId}`,
-                    }}
-                    state={{ campList }}  // campList를 state로 전달
-                    className={`camp_list_box ${hoveredIndex === index ? 'hovered' : ''}`}
-                    key={index}
-                    ref={index === displayedCampList.length - 1 ? lastCampElementRef : null}
-                >
-                    <img
-                        src={isDefaultImage ? defaultImageUrl : camp.firstImageUrl}
-                        alt="캠핑장 이미지"
-                    />
-                    <div className="camp_list_box_warp">
-                        {isDefaultImage && (
-                            <p className="none">대체 이미지</p>
-                        )}
-                        <div className="camp_info">
-                            <h3>{camp.facltNm}</h3>
-                            <p>{camp.addr1}</p>
-                            <div className="camp_info_ck">
-                                클릭시 상세 페이지로 이동됩니다.
-                                <img src={list_click_ic} alt="list_click_ic" />
+                        {noResults ? (
+                            <div className="no_results">
+                                <div className="no_results_img_warp">
+                                    <img src={no_list_man} alt="검색 결과 없음 이미지" />
+                                    <img src={no_list_caution} alt="주의 이미지" />
+                                </div>
+                                <h3>검색결과가 없어요</h3>
+                                <button onClick={reloadPage} className="retry_button">
+                                    다시 찾아보기
+                                </button>
                             </div>
-                        </div>
-                    </div>
-                    <div 
-                        className="camp_info_briefly"
-                        onMouseEnter={() => setHoveredIndex(index)}
-                        onMouseLeave={() => setHoveredIndex(null)}
-                    >
-                        정보 간략히 보기
-                        <span className="material-symbols-rounded">
-                            keyboard_double_arrow_down
-                        </span>
-                        <div className="camp_info_details">
-                            <b>ㆍ 편의 시설</b>
-                            <ul>
-                            {camp.sbrsCl ? camp.sbrsCl.split(',').map((item, index) => (
-                                 <li className="info_item" key={index}> {item.trim()}</li>
-                            )) : <li className="info_item">제공된 정보가 없습니다.</li>}
-                            </ul>
-                            <b>ㆍ 업종 정보</b>
-                            <ul>
-                            {camp.induty ? camp.induty.split(',').map((item, index) => (
-                                <li className="info_item" key={index}>{item.trim()}</li>
-                            )) : <li className="info_item">제공된 정보가 없습니다.</li>}<br/>
-                            </ul>
-                            
-                            <b>ㆍ 애견 동반 여부</b>
-                            <ul>
-                               <li>{camp.animalCmgCl === '가능' ? '가능' : '불가능'}</li>
-                            </ul>
-                        </div>
-                    </div>
-                </Link>
-            );
-        })
-    )}
-    {loading && (
-        <div className="load_list">
-            <div className="loader"></div>
-            캠핑장 데이터를 불러오는 중입니다...
-        </div>
-    )}
-    {!hasMore && !noResults && (
-        <div className="no_more_data">
-            캠핑장이 없어요 😅
-        </div>
-    )}
-</div>
+                        ) : (
+                        displayedCampList.map((camp, index) => {
+                            const isDefaultImage = camp.firstImageUrl === "" || camp.firstImageUrl === null;
+                            return (
+                                <Link
+                                    to={{
+                                        pathname: `/camp/${camp.contentId}`,
+                                    }}
+                                    state={{ campList }}
+                                    className={`camp_list_box ${hoveredIndex === index ? 'hovered' : ''}`}
+                                    key={index}
+                                    ref={index === displayedCampList.length - 1 ? lastCampElementRef : null}
+                                >
+                                    <img
+                                        src={isDefaultImage ? defaultImageUrl : camp.firstImageUrl}
+                                        alt="캠핑장 이미지"
+                                    />
+                                    <div className="camp_list_box_warp">
+                                        {isDefaultImage && (
+                                            <p className="none">대체 이미지</p>
+                                        )}
+                                        <div className="camp_info">
+                                            <h3>{camp.facltNm}</h3>
+                                            <p>{camp.addr1}</p>
+                                            <div className="camp_info_ck">
+                                                클릭시 상세 페이지로 이동됩니다.
+                                                <img src={list_click_ic} alt="list_click_ic" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div 
+                                        className="camp_info_briefly"
+                                        onMouseEnter={() => setHoveredIndex(index)}
+                                        onMouseLeave={() => setHoveredIndex(null)}
+                                    >
+                                        정보 간략히 보기
+                                        <span className="material-symbols-rounded">
+                                            keyboard_double_arrow_down
+                                        </span>
+                                        <div className="camp_info_details">
+                                            <b>ㆍ 편의 시설</b>
+                                            <ul>
+                                            {camp.sbrsCl ? camp.sbrsCl.split(',').map((item, index) => (
+                                                 <li className="info_item" key={index}> {item.trim()}</li>
+                                            )) : <li className="info_item">제공된 정보가 없습니다.</li>}
+                                            </ul>
+                                            <b>ㆍ 업종 정보</b>
+                                            <ul>
+                                            {camp.induty ? camp.induty.split(',').map((item, index) => (
+                                                <li className="info_item" key={index}>{item.trim()}</li>
+                                            )) : <li className="info_item">제공된 정보가 없습니다.</li>}<br/>
+                                            </ul>
 
-</div>
+                                            <b>ㆍ 애견 동반 여부</b>
+                                            <ul>
+                                               <li>{camp.animalCmgCl === '가능' ? '가능' : '불가능'}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </Link>
+                            );
+                        })
+                    )}
+                    {loading && (
+                        <div className="load_list">
+                            <div className="loader"></div>
+                            캠핑장 데이터를 불러오는 중입니다...
+                        </div>
+                    )}
+                    {!hasMore && !noResults && (
+                        <div className="no_more_data">
+                            캠핑장이 없어요 😅
+                        </div>
+                    )}
                 </div>
+               </div>
+             </div>
             </div>
             <Footer/>
         </div>

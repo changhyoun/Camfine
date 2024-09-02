@@ -10,7 +10,6 @@
     opacity: 0;
     transition: transform 0.5s ease-in-out, opacity 0.3s ease-in-out;
     position: fixed;
-    
     &.show {
         z-index: 102;
         opacity: 1;
@@ -21,8 +20,6 @@
         z-index: -100;
         transform: translateY(100%);
     }
-
-
     .resize-handle {
         background: #fbfbfbb0;
         cursor: ns-resize;
@@ -36,10 +33,6 @@
         width: 10px !important;
         height: 10px;
     }
-    
-
- 
-
     .Camping_Environment_warp {
         width: 100%;
         height: calc(100% - 18%);

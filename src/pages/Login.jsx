@@ -1,3 +1,4 @@
+// login page
 import React, { useState } from 'react';
 import './Login.css';
 import { logoBlue, Login_pop } from '../components/Images';
@@ -5,7 +6,6 @@ import { auth } from '../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth'; 
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import GoMain from '../components/GoMain';
-
 
 function Login() {
     const [emailLocal, setEmailLocal] = useState('');
@@ -49,7 +49,6 @@ function Login() {
 
     return (
         <div id="Login">
-  
             {showError && (
                 <div className="login_cancel show">
                     <div className="login_cancel_pop">
@@ -59,7 +58,6 @@ function Login() {
                             muted
                             onEnded={(e) => e.target.pause()}
                             playsInline
-                            noC
                         />
                         <h3>아이디 혹은 비밀번호가 틀립니다<br/>
                             <Link to={"/Login"}>다시 입력해보세요</Link></h3>

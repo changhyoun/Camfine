@@ -1,3 +1,4 @@
+// list detail page
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
@@ -457,8 +458,8 @@ const CampDetails = () => {
                     <div className="CampDetails_main_warp_inbox">
                     {isLiked && (
                        <div
-                         className={`liked-message`} // 상태에 따라 클래스 추가
-                         ref={likedMessageRef} // 요소 참조
+                         className={`liked-message`}
+                         ref={likedMessageRef}
                          onTransitionEnd={handleTransitionEnd} 
                        >
                          <div className="liked-message_inner">

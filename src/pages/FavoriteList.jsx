@@ -1,3 +1,4 @@
+// like list page
 import React, { useEffect, useState } from 'react';
 import { auth, db } from '../firebase';
 import { collection, query, where, getDocs, deleteDoc, doc } from 'firebase/firestore';
@@ -13,8 +14,8 @@ function FavoriteList() {
     const [favorites, setFavorites] = useState([]);
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState(null);
-    const [showDeletePopup, setShowDeletePopup] = useState(false); // 팝업 표시 여부 상태 추가
-    const [selectedFavoriteId, setSelectedFavoriteId] = useState(null); // 삭제할 찜 ID 상태 추가
+    const [showDeletePopup, setShowDeletePopup] = useState(false); // 팝업 표시 여부
+    const [selectedFavoriteId, setSelectedFavoriteId] = useState(null); // 삭제할 찜 ID
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((currentUser) => {

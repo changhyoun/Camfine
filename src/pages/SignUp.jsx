@@ -1,5 +1,5 @@
+// signup page
 import React, { useState } from 'react';
-
 import './SignUp.css';
 import { logoBlue, SignUp_pop } from '../components/Images';
 import { auth, db } from '../firebase';
@@ -7,7 +7,6 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { doc, setDoc } from 'firebase/firestore';
 import { Link, useNavigate } from 'react-router-dom';
-
 import GoMain from '../components/GoMain';
 
 function SignUp() {
@@ -49,7 +48,6 @@ function SignUp() {
 
     const handleEmailBlur = async () => {
         const fullEmail = `${emailLocal.trim()}@${emailDomain.trim()}`;
-        
         if (!emailLocal || !emailDomain) {
             return;
         }
@@ -80,7 +78,6 @@ function SignUp() {
         });
 
         let valid = true;
-
         const fullEmail = `${emailLocal.trim()}@${emailDomain.trim()}`;
     
         try {
@@ -205,7 +202,6 @@ function SignUp() {
                         <legend>이메일</legend>
                         <div className="email_box">
                             <input
-                            
                                 type="text"
                                 placeholder='이메일을 입력하세요.'
                                 value={emailLocal}

@@ -1,3 +1,4 @@
+// searchlist page
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
@@ -91,9 +92,7 @@ function SearchList() {
         } finally {
             setLoading(false);
         }
-
     };
-
 
     useEffect(() => {
         if (loading) {
@@ -242,7 +241,7 @@ function SearchList() {
                                             to={{
                                                 pathname: `/camp/${camp.contentId}`,
                                             }}
-                                            state={{ campList }}  // campList를 state로 전달
+                                            state={{ campList }}
                                             key={index}
                                             className={`camp_list_box ${hoveredIndex === index ? 'hovered' : ''}`}
                                             ref={index === displayedCampList.length - 1 ? lastCampElementRef : null}

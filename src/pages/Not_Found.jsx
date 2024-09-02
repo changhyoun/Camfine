@@ -1,11 +1,9 @@
-
+// 404 page
 import { page_not_found } from '../components/Images';
 import './Not_Found.css';
 import { Link } from 'react-router-dom';
 
-
 function Not_Found() {
-
    
     return (
         <div id="Not_Found">

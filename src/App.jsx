@@ -10,7 +10,6 @@ const List = lazy(() => import('./pages/List'));
 const CampDetails = lazy(() => import('./pages/CampDetails'));
 const SearchList = lazy(() => import('./pages/SearchList'));
 const SignUp = lazy(() => import('./pages/SignUp'));
-const UserList = lazy(() => import('./UserList'));
 const Login = lazy(() => import('./pages/Login'));
 const FavoriteList = lazy(() => import('./pages/FavoriteList'));
 const Not_Found = lazy(() => import('./pages/Not_Found'));
@@ -35,7 +34,6 @@ function App() {
                         <Route path="/camp/:id" element={<CampDetails campList={campList} />} />
                         <Route path="/searchlist" element={<SearchList />} />
                         <Route path="/signUp" element={<SignUp />} />
-                        <Route path="/UserList" element={<UserList />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/favoriteList" element={<FavoriteList />} />
                         <Route path="*" element={<Not_Found />} /> {/* 없는페이지 표시 */}
