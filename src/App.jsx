@@ -38,7 +38,7 @@ function App() {
                         <Route path="/UserList" element={<UserList />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/favoriteList" element={<FavoriteList />} />
-                        <Route path="*" element={<Not_Found />} /> {/* 정의되지 않은 모든 경로에 대해 NotFound 컴포넌트를 표시 */}
+                        <Route path="*" element={<Not_Found />} /> {/* 없는페이지 표시 */}
                     </Routes>
                 </Suspense>
             </div>
