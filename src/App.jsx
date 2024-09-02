@@ -16,6 +16,7 @@ const FavoriteList = lazy(() => import('./pages/FavoriteList'));
 const Not_Found = lazy(() => import('./pages/Not_Found'));
 
 function App() {
+    const BASE_URL = import.meta.env.BASE_URL;
     const [campList, setCampList] = useState([]);
 
     // 카카오톡 SDK 초기화
@@ -24,7 +25,7 @@ function App() {
     }
 
     return (
-        <Router>
+        <Router basename={BASE_URL}>
             <div className="App">
                 {/* Suspense로 Lazy 로딩된 컴포넌트들을 감싸서 로딩 중 로딩 컴포넌트를 표시 */}
                 <Suspense fallback={<Loading />}>
