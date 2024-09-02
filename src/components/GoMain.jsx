@@ -2,8 +2,6 @@ import React from 'react'
 import {useNavigate } from 'react-router-dom'
 import "./GoMain.css"
 
-
-
 const GoMain = () => {
     const navigate = useNavigate();
     const goHome = () =>{
@@ -17,7 +15,6 @@ const GoMain = () => {
         </span>
         <p>메인 페이지로</p>
     </div>
-    
   )
 }
 

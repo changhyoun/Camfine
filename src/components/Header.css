@@ -26,14 +26,12 @@
         }
     }
 }
-
 .user-menu { 
     position: relative;
     display: inline-block;
     align-items: center;
     width: auto;
     cursor: pointer;
-
     .user-menu-main{
         display: flex;
         align-items: center;

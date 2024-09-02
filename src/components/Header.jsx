@@ -15,7 +15,6 @@ function Header({ logo }) {
     const handleLogoClick = () => {
         navigate('/'); // /Main 경로로 이동
     };
-
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (user) {
@@ -27,7 +26,6 @@ function Header({ logo }) {
                 setNickname('');
             }
         });
-
         return () => unsubscribe();
     }, []);
 

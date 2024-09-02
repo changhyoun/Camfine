@@ -375,17 +375,12 @@ function Main() {
                 </div>
                 <div className="swiper-slide">
                   <Link to={'https://github.com/changhyoun/Camfine'} target="_blank">
-                    <img src="https://image.ajunews.com/content/image/2019/10/02/20191002111624119007.jpg" alt="slide" />
+                    <img src="https://www.marketnews.co.kr/news/photo/201905/33788_48703_1016.jpg" alt="slide" />
                   </Link>
                 </div>
                 <div className="swiper-slide">
                   <Link to={'https://github.com/changhyoun/Camfine'} target="_blank">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFT7EXJs4wS6XEqfytlAAS2b6GQ2pGgw0-gA&s" alt="slide" />
-                  </Link>
-                </div>
-                <div className="swiper-slide">
-                  <Link to={'https://github.com/changhyoun/Camfine'} target="_blank">
-                    <img src="https://file.mk.co.kr/meet/neds/2020/11/image_readtop_2020_1181395_16055901934434873.jpg" alt="slide" />
+                    <img src="https://img.danawa.com/new/cmpart/splan/sports/232/images/main.jpg" alt="slide" />
                   </Link>
                 </div>
               </div>
