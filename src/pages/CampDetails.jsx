@@ -6,7 +6,7 @@ import axios from 'axios';
 import { weather_1, weather_2, weather_3, weather_4, weather_5, weather_6, weather_7, weather_not, facebookLogo, xLogo, kakaoLogo, logoWhite, location_icon, CampDetails_main_pet_pass_lt, CampDetails_main_pet_pass_rt, CampDetails_main_pet_not_lt, CampDetails_main_pet_not_rt, SearchList_main_statistics_lt_back, CampDetails_main_share, CampDetails_main_like1, CampDetails_main_like2 } from '../components/Images'; 
 import './CampDetails.css';
 import DetailFooter from '../components/DetailFooter';
-import { faMagnifyingGlassLocation, faCampground, faUpRightAndDownLeftFromCenter, faBolt, faWifi, faFire, faShower, faGamepad, faBasketballBall, faDumbbell, faWater, faPersonWalking, faStreetView, faStore, faShareFromSquare } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlassLocation, faCampground, faUpRightAndDownLeftFromCenter, faInfo, faBolt, faWifi, faFire, faShower, faGamepad, faBasketballBall, faDumbbell, faWater, faPersonWalking, faStreetView, faStore, faShareFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
@@ -438,7 +438,7 @@ const CampDetails = () => {
             case '마트':
                 return <FontAwesomeIcon icon={faStore} />;
             default:
-                return null;
+                return <FontAwesomeIcon icon={faInfo} />;
         }
     };
 

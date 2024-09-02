@@ -2,7 +2,6 @@ import './Loading.css';
 
 function Loading() {
  
-
     return (
         <div id="Loading">
            <div id="wifi-loader">
