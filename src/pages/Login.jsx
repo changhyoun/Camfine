@@ -58,6 +58,8 @@ function Login() {
                             autoPlay
                             muted
                             onEnded={(e) => e.target.pause()}
+                            playsInline
+                            noC
                         />
                         <h3>아이디 혹은 비밀번호가 틀립니다<br/>
                             <Link to={"/Login"}>다시 입력해보세요</Link></h3>

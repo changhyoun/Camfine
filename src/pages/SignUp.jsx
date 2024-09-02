@@ -183,6 +183,7 @@ function SignUp() {
                             key={videoKey} 
                             src={SignUp_pop} 
                             autoPlay 
+                            playsInline
                             muted 
                             onLoadedMetadata={handleVideoLoaded}
                             onEnded={(e) => e.target.pause()} 
