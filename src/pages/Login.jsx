@@ -60,7 +60,7 @@ function Login() {
                             playsInline
                         />
                         <h3>아이디 혹은 비밀번호가 틀립니다<br/>
-                            <Link to={"/Login"}>다시 입력해보세요</Link></h3>
+                            <Link to={"/login"}>다시 입력해보세요</Link></h3>
                     </div>
                     <span className="material-symbols-rounded" onClick={() => setShowError(false)}>
                         close
