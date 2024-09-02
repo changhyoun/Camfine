@@ -33,9 +33,10 @@
         display: none;
         z-index: 101;
         transform: translateX(-50%);
-        width: 10px;
+        width: 10px !important;
         height: 10px;
     }
+    
 
  
 

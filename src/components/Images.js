@@ -130,8 +130,6 @@ export {CampDetails_main_like1}
 import CampDetails_main_like2 from "../assets/CampDetails_main_like2.png"
 export {CampDetails_main_like2}
 
-
-
 // 찜한장소 관련
 import FavoriteList_unplus from "../assets/FavoriteList_unplus.png"
 export {FavoriteList_unplus}
@@ -143,6 +141,10 @@ import FavoriteList_not from "../assets/FavoriteList_not.png"
 export {FavoriteList_not}
 import FavoriteList_delete_pop from "../assets/FavoriteList_delete_pop.png"
 export {FavoriteList_delete_pop}
+
+// 404 페이지
+import page_not_found from "../assets/page_not_found.png"
+export {page_not_found}
 
 
 
