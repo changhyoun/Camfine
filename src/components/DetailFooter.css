@@ -90,5 +90,14 @@
     }
 }
 
+/* 반응형 */
+@media screen and (max-width: 1000px) and (orientation: landscape) {
+    #DetailFooter {
+        .DetailFooter_inner {
+            width: 70%;
+        }
+    }
+}
+
     
     

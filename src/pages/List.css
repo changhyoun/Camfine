@@ -436,3 +436,33 @@
 }
 
 }
+
+
+/* 반응형 */
+@media screen and (max-width: 1000px) and (orientation: landscape) {
+    .List_main {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        .List_main_warp {
+            width: 70%;
+            & .filter_box {
+                & .filter_box_warp {
+                    & > div {
+                        & .swiper-container3 {
+                            .swiper-wrapper {
+                                width: 100%;
+                                height: 100%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-evenly;
+                            }
+                        }
+                    }
+                }
+            }
+            .camp_list {
+                height: calc(100% - 90px);
+            }
+        }
+    }
+}

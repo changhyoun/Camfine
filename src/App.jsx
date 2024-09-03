@@ -2,7 +2,6 @@ import React, { useState, Suspense, lazy } from 'react';
 import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import Loading from './components/Loading';
 import './App.css';
-import './components/Responsive.css';
 
 // 동적 import로 컴포넌트들을 lazy 로딩
 const Main = lazy(() => import('./pages/Main'));

@@ -54,12 +54,25 @@
   border: 1px solid #5092CF;
   box-sizing: border-box;
   }
-
+  /* 반응형 */
   @media only screen and (max-width: 768px) {
-
     .App{
       /* border: none; */
       border-radius: 0px;
     }
 
   }
+  @media screen and (max-width: 1000px) and (orientation: landscape) {
+    .App{
+      width: 100% !important;
+      height: 100% !important;
+      border-radius: 0px;
+    }
+  }
+
+  @media screen and (max-width: 768px) and (orientation: portrait) {
+    .App {
+        width: 100% !important;
+        height: 100% !important;
+      }
+}

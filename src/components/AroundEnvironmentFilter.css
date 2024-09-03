@@ -136,3 +136,26 @@
         }
     }
 }
+
+/* 반응형 */
+@media screen and (max-width: 1000px) and (orientation: landscape) {
+    .Around_Environment{
+        height: 65%;
+        & > div{
+            width: 80% !important;
+            margin: 0 auto;
+            & > div:nth-of-type(2) {
+                & > ul {
+                li{
+                    border-radius: 20px !important;
+                    }   
+                }
+            }
+            & > div:nth-of-type(3) {
+                button{
+                    border-radius: 20px !important;
+                }
+            }
+        }
+    }
+}

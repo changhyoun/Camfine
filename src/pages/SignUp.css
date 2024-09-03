@@ -233,3 +233,115 @@
         }
     }
 }
+
+/* 반응형 */
+@media screen and (max-width: 1000px) and (orientation: landscape) {
+    #SignUp {
+        & .signup_suc {
+            &::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                width: 100vw !important;
+                height: 100vh !important;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 100;
+            }
+            & > div{
+                width: 50%;
+                height: 280px;
+                h3{
+                    font-size: 0.8em;
+                    width: 90%;
+                }
+            }
+            span{
+                margin-top: 2%;
+                padding: 1.5%;
+            }
+        }
+        & > div {
+            width: 65% !important;
+            height: 100% !important;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            form {
+                width: 100%;
+                height: 85% !important;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                overflow-x: hidden !important;
+                overflow-y: auto !important;
+                & > div{
+                    width: 95% !important;
+                    margin-top:  1%;
+                }
+                .signup_btn{
+                    width: 95% !important;
+                    padding: 10px 0 !important;
+                    margin-top:  1%;
+                }
+            }
+        }
+        .GoMain {
+            top: 10% !important;
+        }
+    }
+}
+
+@media screen and (max-width: 700px) and (orientation: landscape) {
+    #SignUp {
+        & .signup_suc {
+            & > div {
+                width: 55%;
+                height: 230px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 400px) and (orientation: portrait) {
+    #SignUp {
+        & > div {
+            width: 90% !important;
+            height: 100% !important;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            img{
+                margin-top: 10% !important;
+            }
+            form {
+                width: 100%;
+                height: 85% !important;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                overflow-x: hidden !important;
+                overflow-y: auto !important;
+                & > div{
+                    width: 95% !important;
+                }
+                .signup_btn{
+                    width: 95% !important;
+                    padding: 10px 0 !important;
+                }
+            }
+        }
+        & .signup_suc {
+            & > div {
+                width: 95% !important;
+                h3 {
+                    font-weight: 400;
+                    font-size: 0.9em !important;
+                }
+            }
+        }
+    }
+}

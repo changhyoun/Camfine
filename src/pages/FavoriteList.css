@@ -287,3 +287,46 @@
     }
 
 }
+
+/* 반응형 */
+@media screen and (max-width: 1000px) and (orientation: landscape) {
+    #FavoriteList {
+        & .FavoriteList_main {
+            .FavoriteList_main_inner {
+                width: 70%;
+                & ul {
+                    & .favorite_campList {
+                        & > div {
+                            & > div:nth-of-type(1) {
+                                p{
+                                    position: absolute;
+                                    top: 18%;
+                                    left: 24%;
+                                    color: #D4D9D1;
+                                    font-family: 'BinggraeSamanco';
+                                    font-size: 0.8em;
+                                    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+                                }
+                                img:nth-of-type(2) {
+                                    bottom: -10px;
+                                    width: 125px;
+                                }
+                                img:nth-of-type(3) {
+                                    position: absolute;
+                                    top: 31%;
+                                    transform: translateY(-50%);
+                                    left: 22%;
+                                    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.25));
+                                    width: 70px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .fav_delete_pop{
+            width: 70%;
+        }
+    }
+}

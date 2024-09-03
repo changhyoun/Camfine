@@ -491,3 +491,15 @@
         transform: translateX(-100%);
     }
 }
+
+/* 반응형 */
+@media screen and (max-width: 1000px) and (orientation: landscape) {
+    .main {
+        .main_warp {
+            width: 70%;
+            height: 100%;
+            box-sizing: border-box;
+        }
+    }
+}
+

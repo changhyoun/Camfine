@@ -413,3 +413,27 @@
         margin: auto;
     }
 }
+
+/* 반응형 */
+@media screen and (max-width: 1000px) and (orientation: landscape) {
+    #SearchList {
+        & .SearchList_main {
+            overflow-x: hidden;
+            overflow-y: auto;
+            .SearchList_main_warp {
+                width: 70%;
+                height: 100%;
+                .camp_search_list {
+                    height: calc(100% - 90px);
+                }
+            }
+        }
+        .loading-message{
+            img{
+                width: 60%;
+
+            }
+        }
+        
+    }
+}

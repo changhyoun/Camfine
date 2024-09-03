@@ -137,3 +137,26 @@
         }
     }
 }
+
+/* 반응형 */
+@media screen and (max-width: 1000px) and (orientation: landscape) {
+    .Camping_type{
+        height: 65%;
+        .Camping_type_warp {
+            width: 80%;
+            margin: 0 auto;
+            & > div:nth-of-type(2) {
+                & > ul {
+                li{
+                    border-radius: 20px;
+                    }   
+                }
+            }
+            & > div:nth-of-type(3) {
+                button{
+                    border-radius: 20px;
+                }
+            }
+        }
+    }
+}
