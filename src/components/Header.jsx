@@ -69,7 +69,7 @@ function Header({ logo }) {
                 }
             } catch (error) {
                 console.error('계정 삭제 오류:', error.message);
-                alert('계정 삭제 중 오류가 발생했습니다. 다시 시도해 주세요.');
+                alert('계정 삭제 중 오류가 발생했네요, 재 로그인 후 탈퇴를 진행해주세요!');
             }
         }
     };
