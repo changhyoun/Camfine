@@ -267,6 +267,9 @@
             flex-direction: column;
             justify-content: center;
             position: relative;
+            & > img{
+                width: 25%;
+            }
             & > form{
                 overflow-x: hidden;
                 overflow-y: scroll;

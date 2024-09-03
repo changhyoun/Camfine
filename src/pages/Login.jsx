@@ -47,6 +47,10 @@ function Login() {
         navigate('/')
     }
 
+    const reLoad = () =>{
+        window.location.reload();
+    }
+
     return (
         <div id="Login">
             {showError && (
@@ -60,7 +64,7 @@ function Login() {
                             playsInline
                         />
                         <h3>아이디 혹은 비밀번호가 틀립니다<br/>
-                            <Link to={"/login"}>다시 입력해보세요</Link></h3>
+                            <Link to={"#"} onClick={reLoad}>다시 입력해보세요</Link></h3>
                     </div>
                     <span className="material-symbols-rounded" onClick={() => setShowError(false)}>
                         close
