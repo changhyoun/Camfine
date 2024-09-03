@@ -268,7 +268,7 @@
             justify-content: center;
             position: relative;
             & > img{
-                width: 20%;
+                width: 21%;
             }
             & > form{
                 overflow-x: hidden;
