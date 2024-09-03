@@ -1,1 +1,0 @@
-import{u as n,j as s}from"./index-Dl3JXMR4.js";const i=()=>{const a=n(),e=()=>{a("/")};return s.jsxs("div",{className:"GoMain",onClick:e,children:[s.jsx("span",{class:"material-symbols-rounded",children:"chevron_left"}),s.jsx("p",{children:"메인 페이지로"})]})};export{i as G};
