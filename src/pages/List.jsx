@@ -402,4 +402,4 @@ function List({ campList, setCampList }) {
     );
 }
 
-export default List;
+export default React.memo(List);

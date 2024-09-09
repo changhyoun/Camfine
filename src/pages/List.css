@@ -440,6 +440,9 @@
 
 /* 반응형 */
 @media screen and (max-width: 1000px) and (orientation: landscape) {
+    .camp_info_briefly{
+        display: none !important;
+    }
     .List_main {
         overflow-x: hidden;
         overflow-y: scroll;
@@ -464,5 +467,11 @@
                 height: calc(100% - 90px);
             }
         }
+    }
+}
+
+@media screen and (max-width: 1000px) and (orientation: portrait) {
+    .camp_info_briefly{
+        display: none !important;
     }
 }

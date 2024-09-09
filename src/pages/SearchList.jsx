@@ -304,4 +304,4 @@ function SearchList() {
     );
 }
 
-export default SearchList;
+export default React.memo(SearchList)

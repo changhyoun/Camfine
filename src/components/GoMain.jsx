@@ -10,7 +10,7 @@ const GoMain = () => {
     
   return (
     <div className="GoMain" onClick={goHome}>
-        <span class="material-symbols-rounded">
+        <span className="material-symbols-rounded">
             chevron_left
         </span>
         <p>메인 페이지로</p>
