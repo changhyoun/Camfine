@@ -727,4 +727,4 @@ const CampDetails = () => {
     );
 };
 
-export default CampDetails;
+export default React.memo(CampDetails)
