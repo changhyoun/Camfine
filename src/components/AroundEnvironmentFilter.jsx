@@ -1,8 +1,34 @@
-import React, { useRef  } from 'react';
+import React, { useRef, useEffect } from 'react';
 import './AroundEnvironmentFilter.css';
 
-function AroundEnvironmentFilter({ showAroundEnvironment, selectedAroundEnvironments = [], handleAroundEnvironmentClick, handleAroundEnvironmentSelect, handleAroundEnvironmentConfirm }) {
+function AroundEnvironmentFilter({
+    showAroundEnvironment, 
+    selectedAroundEnvironments = [], 
+    handleAroundEnvironmentClick, 
+    handleAroundEnvironmentSelect, 
+    handleAroundEnvironmentConfirm 
+}) {
     const AroundEnvironmentRef = useRef(null);
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            // 클릭된 영역이 AroundEnvironmentRef의 내부에 있는지 확인
+            if (AroundEnvironmentRef.current && !AroundEnvironmentRef.current.contains(event.target)) {
+                // AroundEnvironment 외부를 클릭했을 때 실행할 함수
+                handleAroundEnvironmentClick();
+            }
+        }
+
+        if (showAroundEnvironment) {
+            // 이벤트 리스너 추가 (외부 클릭 감지)
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            // 컴포넌트 언마운트 또는 showAroundEnvironment 변경 시 리스너 제거
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [showAroundEnvironment, handleAroundEnvironmentClick]);
 
     return (
         <div ref={AroundEnvironmentRef} className={`Around_Environment ${showAroundEnvironment ? 'show' : 'hidden'}`}>

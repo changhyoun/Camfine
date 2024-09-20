@@ -167,10 +167,6 @@ function SignUp() {
     const goHome = () =>{
         navigate('/')
     }
-    
-    const reLoad = () =>{
-        window.location.reload();
-    }
 
     return (
         <div id="SignUp">
@@ -187,7 +183,7 @@ function SignUp() {
                             onEnded={(e) => e.target.pause()} 
                         />
                         <h3><span>{nickname}님</span> 회원가입이 완료되었습니다.<br/>
-                        <Link to={"#"} onClick={reLoad}>로그인 페이지</Link>로 이동해보세요!</h3>
+                        <Link to={"/Login"}>로그인 페이지</Link>로 이동해보세요!</h3>
                     </div>
                     <span className="material-symbols-rounded" onClick={handleReload}>
                     close
